@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1deb1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Tempo de geração: 16/06/2024 às 18:25
--- Versão do servidor: 10.11.6-MariaDB-0+deb12u1
--- Versão do PHP: 8.2.18
+-- Host: 127.0.0.1
+-- Tempo de geração: 06/07/2024 às 03:13
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,6 +32,27 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `contar_produtos` (`categoria_nome` V
 END$$
 
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `admin`
+--
+
+CREATE TABLE `admin` (
+  `matricula` varchar(12) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `nome` varchar(100) DEFAULT NULL,
+  `acesso` varchar(200) DEFAULT NULL,
+  `senha` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `admin`
+--
+
+INSERT INTO `admin` (`matricula`, `email`, `nome`, `acesso`, `senha`) VALUES
+('202119010007', 'ismaelcraft74@gmail.com', 'Ismael Gomes', 'Ver, Inserir, Modificar, Deletar', 'IsmaeL123');
 
 -- --------------------------------------------------------
 
@@ -216,6 +237,12 @@ DELIMITER ;
 --
 
 --
+-- Índices de tabela `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`matricula`);
+
+--
 -- Índices de tabela `cliente`
 --
 ALTER TABLE `cliente`
@@ -255,12 +282,6 @@ ALTER TABLE `venda`
 --
 ALTER TABLE `cliente`
   MODIFY `cod_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de tabela `funcionario`
---
-ALTER TABLE `funcionario`
-  MODIFY `id_func` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `produto`
