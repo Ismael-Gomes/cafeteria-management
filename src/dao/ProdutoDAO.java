@@ -17,8 +17,8 @@ public class ProdutoDAO {
     
     private static final Logger LOGGER = Logger.getLogger(PessoaDAO.class.getName());
     private String url = "jdbc:mysql://localhost:3306/lanchonete";
-    private String usuario = "root";
-    private String senha = "";
+    private String usuario = "ismael";
+    private String senha = "IsmaeL123";
 
     private Connection conection() throws SQLException {
         return DriverManager.getConnection(url, usuario, senha);

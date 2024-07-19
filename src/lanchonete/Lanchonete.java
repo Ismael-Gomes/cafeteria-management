@@ -33,22 +33,28 @@ public class Lanchonete{
 
             switch (choice) {
                 case 1:
+                    clearScreen();
                     menuOpcao1(sc);
                     break;
                 case 2:
+                    clearScreen();
                     menuOpcao2(sc);
                     break;
                 case 3:
+                    clearScreen();
                     menuOpcao3(sc);
                     break;
                 case 4:
+                    clearScreen();
                     menuOpcao4(sc);
                     break;
                 case 5:
+                    clearScreen();
                     exit = true;
                     System.out.println("Saindo do programa...");
                     break;
                 default:
+                    clearScreen();
                     System.out.println("Opção inválida. Tente novamente.");
             }
         }
@@ -57,7 +63,7 @@ public class Lanchonete{
 
     }
     
-    private static void menuOpcao1(Scanner sc) {
+    private static void menuOpcao1(Scanner sc) throws  InterruptedException {
         boolean back = false;
 
         while (!back) {
@@ -70,10 +76,10 @@ public class Lanchonete{
             System.out.println("==================");
             System.out.print("Escolha uma opção: ");
             int choice = sc.nextInt();
+            clearScreen();
             
             switch (choice) {
                 case 1:
-                    clearScreen();
                     categoria = "Lanche";
                     System.out.println("\nEsses são nossos lanches: ");
                     try {
@@ -116,7 +122,7 @@ public class Lanchonete{
         }
     }
 
-    private static void menuOpcao2(Scanner sc) {
+    private static void menuOpcao2(Scanner sc) throws  InterruptedException {
         boolean back = false;
 
         while (!back) {
@@ -124,9 +130,12 @@ public class Lanchonete{
             System.out.println("1. Sub-opção 2.1");
             System.out.println("2. Sub-opção 2.2");
             System.out.println("3. Voltar ao menu principal");
-            
             System.out.print("Escolha uma opção: ");
             int choice = sc.nextInt();
+            clearScreen();
+            System.out.println("\nCarregando...");
+            Thread.sleep(1500);
+            clearScreen();
 
             switch (choice) {
                 case 1:
@@ -146,7 +155,7 @@ public class Lanchonete{
         }
     }
     
-    private static void menuOpcao3(Scanner sc) {
+    private static void menuOpcao3(Scanner sc) throws  InterruptedException {
         boolean back = false;
 
         while (!back) {
@@ -154,9 +163,12 @@ public class Lanchonete{
             System.out.println("1. Sub-opção 2.1");
             System.out.println("2. Sub-opção 2.2");
             System.out.println("3. Voltar ao menu principal");
-            
             System.out.print("Escolha uma opção: ");
             int choice = sc.nextInt();
+            clearScreen();
+            System.out.println("\nCarregando...");
+            Thread.sleep(1500);
+            clearScreen();
 
             switch (choice) {
                 case 1:
@@ -188,9 +200,6 @@ public class Lanchonete{
             System.out.print("Escolha uma opção: ");
             int choice = sc.nextInt();
             clearScreen();
-            System.out.println("\nCarregando...");
-            Thread.sleep(1500);
-            clearScreen();
 
 
             switch (choice) {
@@ -200,23 +209,27 @@ public class Lanchonete{
                         System.out.print("Senha: ");
                         String senha = sc.next();
                         if (isValidMatricula(matricula) && isValidSenha(senha)) {
-                            //TODO
                             if (adminNegocio.verificarCredenciais(matricula, senha)) {
+                                clearScreen();
                                 System.out.println("Login bem-sucedido! Bem-vindo à área administrativa.");
                                 // Prossiga para a tela de administração
                             } else {
                                 if (adminNegocio.verificarMatricula(matricula)) {
                                     System.out.println("Senha incorreta.");
+                                    clearScreen();
                                 } else {
                                     System.out.println("Matrícula não encontrada.");
+                                    clearScreen();
                                 }
                             }
                         } else {
                             if (!isValidMatricula(matricula)) {
                                 System.out.println("Matrícula inválida! Deve conter 12 dígitos.");
+                                clearScreen();
                             }
                             if (!isValidSenha(senha)) {
                                 System.out.println("Senha inválida! Deve ter entre 8 e 20 caracteres.");
+                                clearScreen();
                             }
                         }
                     break;
@@ -237,8 +250,13 @@ public class Lanchonete{
         return senha.length() >= 8 && senha.length() <= 20; // Verifica se a senha tem entre 8 e 20 caracteres
     }
     
-    public static void clearScreen(){
+    public static void clearScreen() throws InterruptedException {
         // Limpa o terminal imprimindo 100 linhas em branco
+        for (int i = 0; i < 100; i++) {
+            System.out.println();
+        }
+        System.out.println("\nCarregando...");
+        Thread.sleep(1500);
         for (int i = 0; i < 100; i++) {
             System.out.println();
         }
