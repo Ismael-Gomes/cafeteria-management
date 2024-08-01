@@ -84,12 +84,10 @@ public class Lanchonete{
                     System.out.println("\nEsses são nossos lanches: ");
                     try {
                     //listagem de produtos em sequencia.
-                        List<Produto> lanches = produtoNegocio.searchByCategory("Lanche");
-                        for(Produto produto : lanches){
-                            GerenciadorDeProdutos gerenciadorLanches = new GerenciadorDeProdutos();
-                            gerenciadorLanches.viewProductsSequence();
-                        }
-                        System.out.println("Deseja fazer um pedido?");
+                        produtoNegocio.searchByCategory("Lanche");
+                        GerenciadorDeProdutos gerenciadorLanches = new GerenciadorDeProdutos();
+                        gerenciadorLanches.viewProductsSequence();
+                        System.out.println("\nDeseja fazer um pedido?");
                         System.out.println("1 - SIM\n2 - NÃO");
                         choice = sc.nextInt();
                         switch(choice){
