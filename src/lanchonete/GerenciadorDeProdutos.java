@@ -31,4 +31,32 @@ public class GerenciadorDeProdutos {
         GerenciadorDeProdutos gerenciadorProdutos = new GerenciadorDeProdutos();
         gerenciadorProdutos.viewProductsSequence();
     }
+
+    public void viewProducts(int id) {
+        ProdutoNegocio produtoNegocio = new ProdutoNegocio();
+        List<Produto> produtos;
+
+        try {
+            produtos = produtoNegocio.searchAll();
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar os produtos: " + e.getMessage());
+            return;
+        }
+
+        boolean encontrado = false;
+        for (Produto produto : produtos) {
+            if (produto.getId() == id) {
+                System.out.println("\nComprado com Sucesso!");
+                encontrado = true;
+                break;
+            }
+        }
+        if (!encontrado) {
+            System.out.println("Produto não encontrado!");
+        }
+
+
+
+    }
+
 }

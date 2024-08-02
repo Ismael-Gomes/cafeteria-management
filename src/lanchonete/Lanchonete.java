@@ -65,6 +65,7 @@ public class Lanchonete{
     
     private static void menuOpcao1(Scanner sc) throws  InterruptedException {
         boolean back = false;
+        GerenciadorDeProdutos gerenciadorLanches = new GerenciadorDeProdutos();
 
         while (!back) {
             System.out.println("\nCardápio");
@@ -85,15 +86,15 @@ public class Lanchonete{
                     try {
                     //listagem de produtos em sequencia.
                         produtoNegocio.searchByCategory("Lanche");
-                        GerenciadorDeProdutos gerenciadorLanches = new GerenciadorDeProdutos();
                         gerenciadorLanches.viewProductsSequence();
                         System.out.println("\nDeseja fazer um pedido?");
                         System.out.println("1 - SIM\n2 - NÃO");
                         choice = sc.nextInt();
                         switch(choice){
                             case 1:
-                                System.out.println("Pedido feito");
-                                break;
+                                System.out.println("Digite o ID do pedido que deseja: ");
+                                int id = sc.nextInt();
+                                gerenciadorLanches.viewProducts(id);
                             case 2:
                                 System.out.println("Voltando...");
                                 break;
