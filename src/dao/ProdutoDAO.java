@@ -124,7 +124,7 @@ public class ProdutoDAO {
                 if (rs.next()) {
                     int quantidadeAtual = rs.getInt("quantidade");
                     if (quantidadeAtual >= quantidadeVendida){
-                        ps.setInt(1, quantidadeVendida - 1);
+                        ps.setInt(1, quantidadeVendida - quantidadeVendida);
                         ps.setInt(2, produtoId);
                         ps.executeUpdate();
                         return true;
