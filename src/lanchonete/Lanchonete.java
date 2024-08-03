@@ -84,7 +84,6 @@ public class Lanchonete{
                     categoria = "Lanche";
                     System.out.println("\nEsses são nossos lanches: ");
                     try {
-                    //listagem de produtos em sequencia.
                         produtoNegocio.searchByCategory("Lanche");
                         gerenciadorLanches.viewProductsSequence();
                         System.out.println("\nDeseja fazer um pedido?");
@@ -92,9 +91,13 @@ public class Lanchonete{
                         choice = sc.nextInt();
                         switch(choice){
                             case 1:
-                                System.out.println("Digite o ID do pedido que deseja: ");
+                                System.out.print("Digite o ID do pedido que deseja: ");
                                 int id = sc.nextInt();
-                                gerenciadorLanches.viewProducts(id);
+                                if (gerenciadorLanches.viewProducts(id)){
+                                    System.out.print("Digite a quantidade: ");
+                                    int quantidade = sc.nextInt();
+                                    produtoNegocio.updateInventory(id, quantidade);
+                                }
                             case 2:
                                 System.out.println("Voltando...");
                                 break;

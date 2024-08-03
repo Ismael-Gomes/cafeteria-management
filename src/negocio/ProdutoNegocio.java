@@ -21,6 +21,9 @@ public class ProdutoNegocio {
         produtoDao.insertProduct(produto);
     }
 
+    public void updateInventory(int produtoId, int quantidadeVendida) throws SQLException {
+        produtoDao.updateInventory(produtoId, quantidadeVendida);
+    }
     /*try {
         //listagem de produtos em sequencia.
             List<Produto> produtos = produtoNegocio.buscarPorCategoria("Lanche");

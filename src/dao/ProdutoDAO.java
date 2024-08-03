@@ -115,11 +115,24 @@ public class ProdutoDAO {
     
     public void updateInventory(int produtoId, int quantidadeVendida) throws SQLException {
         String sql = "UPDATE produto SET quantidade = quantidade - ? WHERE id = ?";
+        String sqlQuantity = "SELECT quantidade FROM produto WHERE id = ?";
         try (Connection conexao = conection();
-             PreparedStatement ps = conexao.prepareStatement(sql)) {
-            ps.setInt(1, quantidadeVendida);
-            ps.setInt(2, produtoId);
-            ps.executeUpdate();
+             PreparedStatement ps = conexao.prepareStatement(sql);
+             PreparedStatement psQuantity = conexao.prepareStatement(sqlQuantity)){
+            psQuantity.setInt(1, produtoId);
+            try (ResultSet rs = psQuantity.executeQuery()) {
+                if (rs.next()) {
+                    int quantidadeAtual = rs.getInt("quantidade");
+                    if (quantidadeAtual >= quantidadeVendida){
+                        ps.setInt(1, quantidadeVendida);
+                        ps.setInt(2, produtoId);
+                        ps.executeUpdate();
+                        System.out.println("\nComprado com Sucesso!");
+                    } else {
+                        LOGGER.log(Level.SEVERE, "Estoque insuficiente!");
+                    }
+                }
+            }
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Erro ao atualizar estoque", e);
             throw e;
