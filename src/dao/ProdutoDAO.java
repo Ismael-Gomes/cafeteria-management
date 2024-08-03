@@ -113,7 +113,7 @@ public class ProdutoDAO {
         }
     }
     
-    public void updateInventory(int produtoId, int quantidadeVendida) throws SQLException {
+    public boolean updateInventory(int produtoId, int quantidadeVendida) throws SQLException {
         String sql = "UPDATE produto SET quantidade = quantidade - ? WHERE id = ?";
         String sqlQuantity = "SELECT quantidade FROM produto WHERE id = ?";
         try (Connection conexao = conection();
@@ -124,10 +124,10 @@ public class ProdutoDAO {
                 if (rs.next()) {
                     int quantidadeAtual = rs.getInt("quantidade");
                     if (quantidadeAtual >= quantidadeVendida){
-                        ps.setInt(1, quantidadeVendida);
+                        ps.setInt(1, quantidadeVendida - 1);
                         ps.setInt(2, produtoId);
                         ps.executeUpdate();
-                        System.out.println("\nComprado com Sucesso!");
+                        return true;
                     } else {
                         LOGGER.log(Level.SEVERE, "Estoque insuficiente!");
                     }
@@ -137,6 +137,7 @@ public class ProdutoDAO {
             LOGGER.log(Level.SEVERE, "Erro ao atualizar estoque", e);
             throw e;
         }
+        return false;
     }
     
 }

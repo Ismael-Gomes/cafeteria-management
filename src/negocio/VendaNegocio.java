@@ -16,10 +16,13 @@ public class VendaNegocio {
         this.produtoDAO = new ProdutoDAO();
     }
 
-    public void MakeSale(int produtoId, int quantidade) throws SQLException {
+    public void insertSale(int produtoId, int quantidade) throws SQLException {
         Timestamp dataVenda = new Timestamp(System.currentTimeMillis());
         Venda venda = new Venda(0, produtoId, quantidade, dataVenda);
-        vendaDAO.insertVale(venda);
-        produtoDAO.updateInventory(produtoId, quantidade);
+        if (produtoDAO.updateInventory(produtoId, quantidade)){
+            vendaDAO.insertSale(venda);
+            System.out.println("\nComprado com Sucesso!");
+        }
+
     }
 }

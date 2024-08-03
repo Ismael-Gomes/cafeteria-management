@@ -17,13 +17,15 @@ public class ProdutoNegocio {
         return produtoDao.searchByCategory(categoria);
     }
 
-    public void inserir(Produto produto) throws SQLException {
+    public void insertProduct(Produto produto) throws SQLException {
         produtoDao.insertProduct(produto);
     }
 
     public void updateInventory(int produtoId, int quantidadeVendida) throws SQLException {
         produtoDao.updateInventory(produtoId, quantidadeVendida);
     }
+
+
     /*try {
         //listagem de produtos em sequencia.
             List<Produto> produtos = produtoNegocio.buscarPorCategoria("Lanche");

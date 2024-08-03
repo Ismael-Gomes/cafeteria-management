@@ -26,7 +26,7 @@ public class VendaDAO {
         }
     }
     
-    public void insertVale(Venda venda) throws SQLException {
+    public void insertSale(Venda venda) throws SQLException {
         String sql = "INSERT INTO venda (produto_id, quantidade, data_venda) VALUES (?, ?, ?)";
         try (Connection conexao = conection();
              PreparedStatement ps = conexao.prepareStatement(sql)) {

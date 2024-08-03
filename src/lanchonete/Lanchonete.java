@@ -1,15 +1,18 @@
 package lanchonete;
 
 import java.util.Scanner;
-import dominio.Produto;
+
 import negocio.AdminNegocio;
 import negocio.ProdutoNegocio;
+import negocio.VendaNegocio;
+import negocio.PessoaNegocio;
 
 import java.util.List;
 
 public class Lanchonete{
   
     static ProdutoNegocio produtoNegocio = new ProdutoNegocio();
+    static VendaNegocio vendaNegocio = new VendaNegocio();
     
     private static String categoria;
     
@@ -94,9 +97,9 @@ public class Lanchonete{
                                 System.out.print("Digite o ID do pedido que deseja: ");
                                 int id = sc.nextInt();
                                 if (gerenciadorLanches.viewProducts(id)){
-                                    System.out.print("Digite a quantidade: ");
+                                    System.out.print("\nDigite a quantidade: ");
                                     int quantidade = sc.nextInt();
-                                    produtoNegocio.updateInventory(id, quantidade);
+                                    vendaNegocio.insertSale(id, quantidade);
                                 }
                             case 2:
                                 System.out.println("Voltando...");
@@ -258,7 +261,7 @@ public class Lanchonete{
             System.out.println();
         }
         System.out.println("\nCarregando...");
-        Thread.sleep(1500);
+        Thread.sleep(500);
         for (int i = 0; i < 100; i++) {
             System.out.println();
         }
