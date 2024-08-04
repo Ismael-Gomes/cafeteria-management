@@ -32,13 +32,14 @@ public class ProdutoDAO {
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 int id = rs.getInt("id");
+                int codigo = rs.getInt("codigo");
                 String categoria = rs.getString("categoria");
                 String nome = rs.getString("nome");
                 String descricao = rs.getString("descricao");
                 BigDecimal preco = rs.getBigDecimal("preco");
                 int quantidade = rs.getInt("quantidade");
                 Timestamp dataCriacao = rs.getTimestamp("data_criacao");
-                Produto produto = new Produto(id, categoria, nome, descricao, preco, quantidade, dataCriacao);
+                Produto produto = new Produto(id, categoria, nome, descricao, preco, quantidade, dataCriacao, codigo);
                 produtos.add(produto);
             }
         }catch(SQLException e){
@@ -56,12 +57,13 @@ public class ProdutoDAO {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 int id = rs.getInt("id");
+                int codigo = rs.getInt("codigo");
                 String nome = rs.getString("nome");
                 String descricao = rs.getString("descricao");
                 BigDecimal preco = rs.getBigDecimal("preco");
                 int quantidade = rs.getInt("quantidade");
                 Timestamp dataCriacao = rs.getTimestamp("data_criacao");
-                Produto produto = new Produto(id, rs.getString("categoria"), nome, descricao, preco, quantidade, dataCriacao);
+                Produto produto = new Produto(id, rs.getString("categoria"), nome, descricao, preco, quantidade, dataCriacao, codigo);
                 produtos.add(produto);
             }
                 
@@ -113,19 +115,19 @@ public class ProdutoDAO {
         }
     }
     
-    public boolean updateInventory(int produtoId, int quantidadeVendida) throws SQLException {
-        String sql = "UPDATE produto SET quantidade = quantidade - ? WHERE id = ?";
-        String sqlQuantity = "SELECT quantidade FROM produto WHERE id = ?";
+    public boolean updateInventory(int produtoCodigo, int quantidadeVendida) throws SQLException {
+        String sql = "UPDATE produto SET quantidade = quantidade - ? WHERE codigo = ?";
+        String sqlQuantity = "SELECT quantidade FROM produto WHERE codigo = ?";
         try (Connection conexao = conection();
              PreparedStatement ps = conexao.prepareStatement(sql);
              PreparedStatement psQuantity = conexao.prepareStatement(sqlQuantity)){
-            psQuantity.setInt(1, produtoId);
+            psQuantity.setInt(1, produtoCodigo);
             try (ResultSet rs = psQuantity.executeQuery()) {
                 if (rs.next()) {
                     int quantidadeAtual = rs.getInt("quantidade");
                     if (quantidadeAtual >= quantidadeVendida){
                         ps.setInt(1, quantidadeVendida - quantidadeVendida);
-                        ps.setInt(2, produtoId);
+                        ps.setInt(2, produtoCodigo);
                         ps.executeUpdate();
                         return true;
                     } else {
@@ -138,6 +140,24 @@ public class ProdutoDAO {
             throw e;
         }
         return false;
+    }
+
+    public int searchId(int produtoCodigo) throws SQLException {
+        String sql = "SELECT id FROM produto WHERE codigo = ?";
+        try (Connection conexao = conection();
+             PreparedStatement ps = conexao.prepareStatement(sql)){
+            ps.setInt(1, produtoCodigo);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id");
+                } else {
+                    throw new SQLException("Produto não encontrado");
+                }
+            }
+        } catch (SQLException e){
+            LOGGER.log(Level.SEVERE, "Erro ao buscar produto", e);
+            throw e;
+        }
     }
     
 }

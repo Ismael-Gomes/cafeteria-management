@@ -32,7 +32,7 @@ public class GerenciadorDeProdutos {
         gerenciadorProdutos.viewProductsSequence();
     }
 
-    public boolean viewProducts(int id) {
+    public boolean viewProducts(int codigo) {
         ProdutoNegocio produtoNegocio = new ProdutoNegocio();
         List<Produto> produtos;
 
@@ -45,7 +45,7 @@ public class GerenciadorDeProdutos {
 
         boolean encontrado = false;
         for (Produto produto : produtos) {
-            if (produto.getId() == id) {
+            if (produto.getCodigo() == codigo) {
                 encontrado = true;
                 break;
             }

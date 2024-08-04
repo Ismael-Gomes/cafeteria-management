@@ -11,8 +11,9 @@ public class Produto {
     private BigDecimal preco;
     private int quantidade;
     private Timestamp dataCriacao;
+    private int codigo;
 
-    public Produto(int id, String categoria, String nome, String descricao, BigDecimal preco, int quantidade, Timestamp dataCriacao) {
+    public Produto(int id, String categoria, String nome, String descricao, BigDecimal preco, int quantidade, Timestamp dataCriacao, int codigo) {
         this.id = id;
         this.categoria = categoria;
         this.nome = nome;
@@ -20,6 +21,15 @@ public class Produto {
         this.preco = preco;
         this.quantidade = quantidade;
         this.dataCriacao = dataCriacao;
+        this.codigo = codigo;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     public String getCategoria() {
@@ -94,7 +104,8 @@ public class Produto {
 
     @Override
     public String toString() {
-        return  "Nome: " + nome +
+        return  "Codigo: "+ codigo +
+                "\nNome: " + nome +
                 "\nDescrição: " + descricao + 
                 "\nPreço: " + preco +
                 "\nEstoque: " + quantidade +

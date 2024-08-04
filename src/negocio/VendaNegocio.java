@@ -2,6 +2,7 @@ package negocio;
 
 import dao.ProdutoDAO;
 import dao.VendaDAO;
+import dominio.Produto;
 import dominio.Venda;
 
 import java.sql.SQLException;
@@ -16,13 +17,13 @@ public class VendaNegocio {
         this.produtoDAO = new ProdutoDAO();
     }
 
-    public void insertSale(int produtoId, int quantidade) throws SQLException {
+    public void insertSale(int produtoId, int produtoCodigo, int quantidade) throws SQLException {
         Timestamp dataVenda = new Timestamp(System.currentTimeMillis());
         Venda venda = new Venda(0, produtoId, quantidade, dataVenda);
-        if (produtoDAO.updateInventory(produtoId, quantidade)){
+        if (produtoDAO.updateInventory(produtoCodigo, quantidade)){
             vendaDAO.insertSale(venda);
             System.out.println("\nComprado com Sucesso!");
         }
-
     }
+
 }

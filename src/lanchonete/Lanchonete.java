@@ -94,12 +94,13 @@ public class Lanchonete{
                         choice = sc.nextInt();
                         switch(choice){
                             case 1:
-                                System.out.print("Digite o ID do pedido que deseja: ");
-                                int id = sc.nextInt();
-                                if (gerenciadorLanches.viewProducts(id)){
+                                System.out.print("Digite o Código do pedido que deseja: ");
+                                int codigo = sc.nextInt();
+                                if (gerenciadorLanches.viewProducts(codigo)){
                                     System.out.print("\nDigite a quantidade: ");
                                     int quantidade = sc.nextInt();
-                                    vendaNegocio.insertSale(id, quantidade);
+                                    int id = produtoNegocio.searchId(codigo);
+                                    vendaNegocio.insertSale(id, codigo, quantidade);
                                 }
                             case 2:
                                 System.out.println("Voltando...");

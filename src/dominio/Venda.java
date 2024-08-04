@@ -2,8 +2,7 @@ package dominio;
 
 import java.sql.Timestamp;
 
-public class
-Venda {
+public class Venda {
     
     private int id;
     private int produtoId;
