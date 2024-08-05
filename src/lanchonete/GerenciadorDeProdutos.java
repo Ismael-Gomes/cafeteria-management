@@ -7,29 +7,16 @@ import negocio.ProdutoNegocio;
 
 public class GerenciadorDeProdutos {
 
-    public void viewProductsSequence() {
-        ProdutoNegocio produtoNegocio = new ProdutoNegocio();
-        List<Produto> produtos;
-        
-        try {
-            produtos = produtoNegocio.searchAll();
-        } catch (SQLException e) {
-            System.out.println("Erro ao buscar os produtos: " + e.getMessage());
-            return;
-        }
-
-        int sequencia = 1;
-        for (Produto produto : produtos) {
-            System.out.println("\nProduto " + sequencia);
-            System.out.println("=============================");
-            System.out.println(produto.toString());
-            sequencia++;
-        }
+    public void viewProductsSequenceLanche() {
+        sequencia("Lanche");
     }
-    
-    public static void main(String[] args) {
-        GerenciadorDeProdutos gerenciadorProdutos = new GerenciadorDeProdutos();
-        gerenciadorProdutos.viewProductsSequence();
+
+    public void viewProductsSequenceAcompanhamento() {
+        sequencia("Acompanhamento");
+    }
+
+    public void viewProductsSequenceBebida() {
+        sequencia("Bebida");
     }
 
     public boolean viewProducts(int codigo) {
@@ -56,6 +43,27 @@ public class GerenciadorDeProdutos {
         }
 
     return true;
+
+    }
+
+    public void sequencia(String categoria){
+        ProdutoNegocio produtoNegocio = new ProdutoNegocio();
+        List<Produto> produtos;
+
+        try {
+            produtos = produtoNegocio.searchByCategory(categoria);
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar os produtos: " + e.getMessage());
+            return;
+        }
+
+        int sequencia = 1;
+        for (Produto produto : produtos) {
+            System.out.println("\n#### Produto " + sequencia);
+            System.out.println("=============================");
+            System.out.println(produto.toString());
+            sequencia++;
+        }
 
     }
 

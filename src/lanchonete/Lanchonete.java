@@ -23,15 +23,15 @@ public class Lanchonete{
         boolean exit = false;
 
         while (!exit) {
-            System.out.println("Menu Principal");
-            System.out.println("==============");
-            System.out.println("1 - Cardapio");
-            System.out.println("2 - Meu Perfil");
-            System.out.println("3 - Suporte");
-            System.out.println("4 - Admin");
-            System.out.println("5 - Sair");
-            System.out.println("==============");
-            System.out.print("Escolha uma opção: ");
+            System.out.println("#####  Menu Principal  #####");
+            System.out.println("============================");
+            System.out.println("##### 1 - Cardapio     #####");
+            System.out.println("##### 2 - Meu Perfil   #####");
+            System.out.println("##### 3 - Suporte      #####");
+            System.out.println("##### 4 - Admin        #####");
+            System.out.println("##### 0 - Sair         #####");
+            System.out.println("============================");
+            System.out.print("##### Escolha uma opção: ");
             int choice = sc.nextInt();
 
             switch (choice) {
@@ -51,7 +51,7 @@ public class Lanchonete{
                     clearScreen();
                     menuOpcao4(sc);
                     break;
-                case 5:
+                case 0:
                     clearScreen();
                     exit = true;
                     System.out.println("Saindo do programa...");
@@ -68,60 +68,65 @@ public class Lanchonete{
     
     private static void menuOpcao1(Scanner sc) throws  InterruptedException {
         boolean back = false;
-        GerenciadorDeProdutos gerenciadorLanches = new GerenciadorDeProdutos();
 
         while (!back) {
-            System.out.println("\nCardápio");
-            System.out.println("==================");
-            System.out.println("1 - Lanche");
-            System.out.println("2 - Acompanhamento");
-            System.out.println("3 - Bebida");
-            System.out.println("4 - Voltar");
-            System.out.println("==================");
-            System.out.print("Escolha uma opção: ");
+            System.out.println("\n######    Cardápio    #######");
+            System.out.println("===============================");
+            System.out.println("##### 1 - Lanche          #####");
+            System.out.println("##### 2 - Acompanhamento  #####");
+            System.out.println("##### 3 - Bebida          #####");
+            System.out.println("##### 0 - Voltar          #####");
+            System.out.println("===============================");
+            System.out.print("##### Escolha uma opção: ");
             int choice = sc.nextInt();
             clearScreen();
             
             switch (choice) {
                 case 1:
                     categoria = "Lanche";
-                    System.out.println("\nEsses são nossos lanches: ");
+                    System.out.println("\n##### Esses são nossos lanches: ");
+                    GerenciadorDeProdutos gerenciadorLanches = new GerenciadorDeProdutos();
                     try {
-                        produtoNegocio.searchByCategory("Lanche");
-                        gerenciadorLanches.viewProductsSequence();
-                        System.out.println("\nDeseja fazer um pedido?");
-                        System.out.println("1 - SIM\n2 - NÃO");
-                        choice = sc.nextInt();
-                        switch(choice){
-                            case 1:
-                                System.out.print("Digite o Código do pedido que deseja: ");
-                                int codigo = sc.nextInt();
-                                if (gerenciadorLanches.viewProducts(codigo)){
-                                    System.out.print("\nDigite a quantidade: ");
-                                    int quantidade = sc.nextInt();
-                                    int id = produtoNegocio.searchId(codigo);
-                                    vendaNegocio.insertSale(id, codigo, quantidade);
-                                }
-                            case 2:
-                                System.out.println("Voltando...");
-                                break;
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Erro: " + e.getMessage());
+                        produtoNegocio.searchByCategory(categoria);
+                    }catch (Exception e) {
+                        System.out.println("Erro " + e.getMessage());
                     }
+                    gerenciadorLanches.viewProductsSequenceLanche();
+                    comprarProduto(sc);
+
                     
                     break;
+
                 case 2:
-                    System.out.println("\nEsses são nosso acompanhamentos: ");
-                    // Adicionar funcionalidade para Sub-opção 1.2 aqui
+                    categoria = "Acompanhamento";
+                    System.out.println("\n##### Esses são nossos acompanhamentos: ");
+                    GerenciadorDeProdutos gerenciadorAcompanhamentos = new GerenciadorDeProdutos();
+                    try {
+                        produtoNegocio.searchByCategory(categoria);
+                    }catch (Exception e) {
+                        System.out.println("Erro " + e.getMessage());
+                    }
+                    gerenciadorAcompanhamentos.viewProductsSequenceAcompanhamento();
+                    comprarProduto(sc);
                     break;
+
                 case 3:
-                    System.out.println("\nEsses são nosso acompanhamentos: ");
-                    // Adicionar funcionalidade para Sub-opção 1.2 aqui
+                    categoria = "Bebida";
+                    System.out.println("\n##### Essas são nossas bebidas: ");
+                    GerenciadorDeProdutos gerenciadorProdutos = new GerenciadorDeProdutos();
+                    try {
+                        produtoNegocio.searchByCategory(categoria);
+                    }catch (Exception e) {
+                        System.out.println("Erro " + e.getMessage());
+                    }
+                    gerenciadorProdutos.viewProductsSequenceBebida();
+                    comprarProduto(sc);
                     break;
-                case 4:
+
+                case 0:
                     back = true;
                     break;
+
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
             }
@@ -267,4 +272,29 @@ public class Lanchonete{
             System.out.println();
         }
     }
+
+    public static void comprarProduto(Scanner sc){
+        try {
+            GerenciadorDeProdutos gerenciadorLanches = new GerenciadorDeProdutos();
+            System.out.print("\n##### Deseja fazer um pedido | 1 - SIM | 2 - NÃO: ");
+            int choice = sc.nextInt();
+            switch(choice){
+                case 1:
+                    System.out.print("Digite o Código do pedido que deseja: ");
+                    int codigo = sc.nextInt();
+                    if (gerenciadorLanches.viewProducts(codigo)){
+                        System.out.print("\nDigite a quantidade: ");
+                        int quantidade = sc.nextInt();
+                        int id = produtoNegocio.searchId(codigo);
+                        vendaNegocio.insertSale(id, codigo, quantidade);
+                    }
+                case 2:
+                    System.out.println("Voltando...");
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
+
 }
