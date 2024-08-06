@@ -1,6 +1,6 @@
 package dao;
 
-import dominio.Pessoa;
+import dominio.Cliente;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -12,9 +12,9 @@ import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PessoaDAO {
+public class ClienteDAO {
   
-    private static final Logger LOGGER = Logger.getLogger(PessoaDAO.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ClienteDAO.class.getName());
     private String url = "jdbc:mysql://localhost:3306/lanchonete";
     private String usuario = "ismael";
     private String senha = "IsmaeL123";
@@ -23,8 +23,8 @@ public class PessoaDAO {
         return DriverManager.getConnection(url, usuario, senha);
     }
 
-    public List<Pessoa> searchAll() {
-        List<Pessoa> clientes = new ArrayList<>();
+    public List<Cliente> searchAll() {
+        List<Cliente> clientes = new ArrayList<>();
         String sql = "SELECT * FROM cliente";
         try(Connection conexao = conection();
             PreparedStatement ps = conexao.prepareStatement(sql);
@@ -38,7 +38,7 @@ public class PessoaDAO {
             String nomeConta = rs.getString("nome_conta");
             String email = rs.getString("email");
             String senhaUsu = rs.getString("senha");
-            Pessoa clien = new Pessoa(codigo, nome, sexo, data_nascimento, cpf, nomeConta, email, senhaUsu);
+            Cliente clien = new Cliente(codigo, nome, sexo, data_nascimento, cpf, nomeConta, email, senhaUsu);
             clientes.add(clien);
           }
         }catch(SQLException e){
@@ -46,6 +46,21 @@ public class PessoaDAO {
         }
         return clientes;
 
+    }
+
+    public String obterNomePorCPF(String cpf) {
+        String sql = "SELECT nome FROM cliente WHERE cpf = ?";
+        try (Connection conexao = conection();
+             PreparedStatement ps = conexao.prepareStatement(sql)){
+            ps.setString(1, cpf);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("nome");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar nome por CPF", e);
+        }
+        return null;
     }
 
     /*public void inserir(Empregado empregado) throws SQLException {

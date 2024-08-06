@@ -1,16 +1,16 @@
 package negocio;
 
-import dao.PessoaDAO;
-import dominio.Pessoa;
+import dao.ClienteDAO;
+import dominio.Cliente;
 import java.sql.SQLException;
 import java.util.List;
 
 public class PessoaNegocio {
  
-    private PessoaDAO pessoaDao = new PessoaDAO();
+    private ClienteDAO clienteDao = new ClienteDAO();
 
-    public List<Pessoa> searchAll() throws SQLException {
-        return pessoaDao.searchAll();
+    public List<Cliente> searchAll() throws SQLException {
+        return clienteDao.searchAll();
     }
 
     /*

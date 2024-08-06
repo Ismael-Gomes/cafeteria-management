@@ -2,13 +2,13 @@ package dominio;
 
 import java.sql.Date;
 
-public class Pessoa {
+public class Cliente {
 
     private int codigo;
     private String nome, nomeConta, email, senha, cpf, sexo;
     private Date data_nascimento;
 
-    public Pessoa(int codigo, String nome, String sexo, Date data_nascimento, String cpf, String nomeConta, String email, String senha) {
+    public Cliente(int codigo, String nome, String sexo, Date data_nascimento, String cpf, String nomeConta, String email, String senha) {
         this.codigo = codigo;
         this.nome = nome;
         this.nomeConta = nomeConta;

@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 
 public class ProdutoDAO {
     
-    private static final Logger LOGGER = Logger.getLogger(PessoaDAO.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ClienteDAO.class.getName());
     private String url = "jdbc:mysql://localhost:3306/lanchonete";
     private String usuario = "ismael";
     private String senha = "IsmaeL123";

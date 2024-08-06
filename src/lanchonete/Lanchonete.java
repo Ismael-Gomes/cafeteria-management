@@ -6,20 +6,21 @@ import negocio.AdminNegocio;
 import negocio.ProdutoNegocio;
 import negocio.VendaNegocio;
 import negocio.PessoaNegocio;
+import negocio.SuporteNegocio;
 
 import java.util.List;
 
-public class Lanchonete{
-  
+public class Lanchonete {
+
     static ProdutoNegocio produtoNegocio = new ProdutoNegocio();
     static VendaNegocio vendaNegocio = new VendaNegocio();
-    
+
     private static String categoria;
-    
+
     public static void main(String[] args) throws InterruptedException {
 
         Scanner sc = new Scanner(System.in);
-        
+
         boolean exit = false;
 
         while (!exit) {
@@ -65,8 +66,8 @@ public class Lanchonete{
         sc.close();
 
     }
-    
-    private static void menuOpcao1(Scanner sc) throws  InterruptedException {
+
+    private static void menuOpcao1(Scanner sc) throws InterruptedException {
         boolean back = false;
 
         while (!back) {
@@ -80,7 +81,7 @@ public class Lanchonete{
             System.out.print("##### Escolha uma opção: ");
             int choice = sc.nextInt();
             clearScreen();
-            
+
             switch (choice) {
                 case 1:
                     categoria = "Lanche";
@@ -88,13 +89,13 @@ public class Lanchonete{
                     GerenciadorDeProdutos gerenciadorLanches = new GerenciadorDeProdutos();
                     try {
                         produtoNegocio.searchByCategory(categoria);
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         System.out.println("Erro " + e.getMessage());
                     }
                     gerenciadorLanches.viewProductsSequenceLanche();
                     comprarProduto(sc);
 
-                    
+
                     break;
 
                 case 2:
@@ -103,7 +104,7 @@ public class Lanchonete{
                     GerenciadorDeProdutos gerenciadorAcompanhamentos = new GerenciadorDeProdutos();
                     try {
                         produtoNegocio.searchByCategory(categoria);
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         System.out.println("Erro " + e.getMessage());
                     }
                     gerenciadorAcompanhamentos.viewProductsSequenceAcompanhamento();
@@ -116,7 +117,7 @@ public class Lanchonete{
                     GerenciadorDeProdutos gerenciadorProdutos = new GerenciadorDeProdutos();
                     try {
                         produtoNegocio.searchByCategory(categoria);
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         System.out.println("Erro " + e.getMessage());
                     }
                     gerenciadorProdutos.viewProductsSequenceBebida();
@@ -133,7 +134,7 @@ public class Lanchonete{
         }
     }
 
-    private static void menuOpcao2(Scanner sc) throws  InterruptedException {
+    private static void menuOpcao2(Scanner sc) throws InterruptedException {
         boolean back = false;
 
         while (!back) {
@@ -143,9 +144,6 @@ public class Lanchonete{
             System.out.println("3. Voltar ao menu principal");
             System.out.print("Escolha uma opção: ");
             int choice = sc.nextInt();
-            clearScreen();
-            System.out.println("\nCarregando...");
-            Thread.sleep(1500);
             clearScreen();
 
             switch (choice) {
@@ -165,36 +163,40 @@ public class Lanchonete{
             }
         }
     }
-    
-    private static void menuOpcao3(Scanner sc) throws  InterruptedException {
+
+    private static void menuOpcao3(Scanner sc) throws InterruptedException {
         boolean back = false;
-
+        SuporteNegocio suporte = new SuporteNegocio();
         while (!back) {
-            System.out.println("\nMenu da Opção 2:");
-            System.out.println("1. Sub-opção 2.1");
-            System.out.println("2. Sub-opção 2.2");
-            System.out.println("3. Voltar ao menu principal");
-            System.out.print("Escolha uma opção: ");
+            System.out.println("#########      Suporte     ########");
+            System.out.println("===================================");
+            System.out.println("##### 1 - Falar com o Suporte #####");
+            System.out.println("##### 0 - Sair                #####");
+            System.out.println("===================================");
+            System.out.print("##### Escolha uma opção: ");
             int choice = sc.nextInt();
-            clearScreen();
-            System.out.println("\nCarregando...");
-            Thread.sleep(1500);
-            clearScreen();
-
-            switch (choice) {
+            switch (choice){
                 case 1:
-                    System.out.println("Você escolheu a Sub-opção 2.1.");
-                    // Adicionar funcionalidade para Sub-opção 2.1 aqui
+                    System.out.print("\nDigite o seu CPF: ");
+                    String cpf = sc.next();
+                    if (isValidCPF(cpf)) {
+                        System.out.print("\nDigite seu nome: ");
+                        String nome = sc.next();
+                        sc.nextLine();
+                        //BUG AO MANDAR PARA O BANCO DE DADOS. ENVIA APENAS A PRIMEIRA PALAVRA.
+                        System.out.print("Nos fale sobre o seu problema: ");
+                        String descricao = sc.next();
+                        sc.nextLine();
+                        try {
+                            suporte.insertSuport(cpf, cpf, descricao, nome);
+                        } catch (Exception e) {
+                            System.out.println("Erro " + e.getMessage());
+                        }
+                    }
                     break;
-                case 2:
-                    System.out.println("Você escolheu a Sub-opção 2.2.");
-                    // Adicionar funcionalidade para Sub-opção 2.2 aqui
-                    break;
-                case 3:
+                case 0:
                     back = true;
                     break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
             }
 
         }
@@ -215,34 +217,34 @@ public class Lanchonete{
 
             switch (choice) {
                 case 1:
-                        System.out.print("Matricula: ");
-                        String matricula = sc.next();
-                        System.out.print("Senha: ");
-                        String senha = sc.next();
-                        if (isValidMatricula(matricula) && isValidSenha(senha)) {
-                            if (adminNegocio.verificarCredenciais(matricula, senha)) {
-                                clearScreen();
-                                System.out.println("Login bem-sucedido! Bem-vindo à área administrativa.");
-                                // Prossiga para a tela de administração
-                            } else {
-                                if (adminNegocio.verificarMatricula(matricula)) {
-                                    System.out.println("Senha incorreta.");
-                                    clearScreen();
-                                } else {
-                                    System.out.println("Matrícula não encontrada.");
-                                    clearScreen();
-                                }
-                            }
+                    System.out.print("Matricula: ");
+                    String matricula = sc.next();
+                    System.out.print("Senha: ");
+                    String senha = sc.next();
+                    if (isValidMatricula(matricula) && isValidSenha(senha)) {
+                        if (adminNegocio.verificarCredenciais(matricula, senha)) {
+                            clearScreen();
+                            System.out.println("Login bem-sucedido! Bem-vindo à área administrativa.");
+                            // Prossiga para a tela de administração
                         } else {
-                            if (!isValidMatricula(matricula)) {
-                                System.out.println("Matrícula inválida! Deve conter 12 dígitos.");
+                            if (adminNegocio.verificarMatricula(matricula)) {
+                                System.out.println("Senha incorreta.");
                                 clearScreen();
-                            }
-                            if (!isValidSenha(senha)) {
-                                System.out.println("Senha inválida! Deve ter entre 8 e 20 caracteres.");
+                            } else {
+                                System.out.println("Matrícula não encontrada.");
                                 clearScreen();
                             }
                         }
+                    } else {
+                        if (!isValidMatricula(matricula)) {
+                            System.out.println("Matrícula inválida! Deve conter 12 dígitos.");
+                            clearScreen();
+                        }
+                        if (!isValidSenha(senha)) {
+                            System.out.println("Senha inválida! Deve ter entre 8 e 20 caracteres.");
+                            clearScreen();
+                        }
+                    }
                     break;
                 case 2:
                     back = true;
@@ -260,7 +262,7 @@ public class Lanchonete{
     public static boolean isValidSenha(String senha) {
         return senha.length() >= 8 && senha.length() <= 20; // Verifica se a senha tem entre 8 e 20 caracteres
     }
-    
+
     public static void clearScreen() throws InterruptedException {
         // Limpa o terminal imprimindo 100 linhas em branco
         for (int i = 0; i < 100; i++) {
@@ -273,16 +275,16 @@ public class Lanchonete{
         }
     }
 
-    public static void comprarProduto(Scanner sc){
+    public static void comprarProduto(Scanner sc) {
         try {
             GerenciadorDeProdutos gerenciadorLanches = new GerenciadorDeProdutos();
             System.out.print("\n##### Deseja fazer um pedido | 1 - SIM | 2 - NÃO: ");
             int choice = sc.nextInt();
-            switch(choice){
+            switch (choice) {
                 case 1:
                     System.out.print("Digite o Código do pedido que deseja: ");
                     int codigo = sc.nextInt();
-                    if (gerenciadorLanches.viewProducts(codigo)){
+                    if (gerenciadorLanches.viewProducts(codigo)) {
                         System.out.print("\nDigite a quantidade: ");
                         int quantidade = sc.nextInt();
                         int id = produtoNegocio.searchId(codigo);
@@ -297,4 +299,46 @@ public class Lanchonete{
         }
     }
 
+    public static boolean isValidCPF(String cpf) {
+        Scanner sc = new Scanner(System.in);
+        do {
+            //Digitar apenas dígitos
+            Long cpfLong = Long.valueOf(cpf);
+            System.out.print("\nValidando CPF...");
+            //O CPF PODE INICIAR COM ZEROS
+            if (cpfLong > 0L && cpfLong <= 99999999999L) {
+                int vetorCPF[] = new int[11];
+                //convertendo a String em um vetor de int
+                for (int i = 0; i < cpf.length(); i++) {
+                    //Converto cada posição da string em um número
+                    vetorCPF[i] = Character.getNumericValue(cpf.charAt(i));
+                }
+                int sm = (vetorCPF[0] * 10) + (vetorCPF[1] * 9) + (vetorCPF[2] * 8) + (vetorCPF[3] * 7) + (vetorCPF[4] * 6) + (vetorCPF[5] * 5) + (vetorCPF[6] * 4) + (vetorCPF[7] * 3) + (vetorCPF[8] * 2);
+                int digito1 = (sm * 10) % 11;
+                if (digito1 == 10 || digito1 == 11) {
+                    digito1 = 0;
+                }
+                int sm2 = (vetorCPF[0] * 11) + (vetorCPF[1] * 10) + (vetorCPF[2] * 9) + (vetorCPF[3] * 8) + (vetorCPF[4] * 7) + (vetorCPF[5] * 6) + (vetorCPF[6] * 5) + (vetorCPF[7] * 4) + (vetorCPF[8] * 3) + (digito1 * 2);
+                int digito2 = (sm2 * 10) % 11;
+                if (digito2 == 10 || digito2 == 11) {
+                    digito2 = 0;
+                }
+                //Verificando se o CPF é válido
+                if (digito1 == vetorCPF[9] && digito2 == vetorCPF[10]) {
+                    return true;
+                } else {
+                    System.out.println("\n\n-----------------------------------");
+                    System.out.println("\nCPF Inválido!");
+                    System.out.println("\n-----------------------------------");
+                    return false;
+                }
+            } else {
+                System.out.println("\n\n-----------------------------------");
+                System.out.println("\nCPF Inválido!");
+                System.out.println("\n-----------------------------------");
+                return false;
+            }
+            //Testa a condição do cpf.
+        } while (false);
+    }
 }

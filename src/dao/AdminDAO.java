@@ -13,7 +13,7 @@ import java.util.logging.Level;
 
 public class AdminDAO {
 
-    private static final Logger LOGGER = Logger.getLogger(PessoaDAO.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ClienteDAO.class.getName());
     private String url = "jdbc:mysql://localhost:3306/lanchonete";
     private String usuario = "ismael";
     private String senha = "IsmaeL123";

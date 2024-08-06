@@ -1,6 +1,6 @@
 package lanchonete;
 
-import dominio.Pessoa;
+import dominio.Cliente;
 import negocio.PessoaNegocio;
 import java.sql.SQLException;
 import java.util.List;
@@ -9,7 +9,7 @@ public class GerenciadorDeClientes {
 
     public void exibirClientesComSequencia() {
         PessoaNegocio pessoaNegocio = new PessoaNegocio();
-        List<Pessoa> clientes;
+        List<Cliente> clientes;
         
         try {
             clientes = pessoaNegocio.searchAll();
@@ -19,7 +19,7 @@ public class GerenciadorDeClientes {
         }
 
         int sequencia = 1;
-        for (Pessoa cliente : clientes) {
+        for (Cliente cliente : clientes) {
             System.out.println("\nCliente " + sequencia);
             System.out.println("==============================");
             System.out.println(cliente.toString());
