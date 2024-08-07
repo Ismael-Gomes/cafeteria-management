@@ -8,12 +8,12 @@ public class Produto {
     private String categoria;
     private String nome;
     private String descricao;
-    private BigDecimal preco;
+    private double preco;
     private int quantidade;
     private Timestamp dataCriacao;
     private int codigo;
 
-    public Produto(int id, String categoria, String nome, String descricao, BigDecimal preco, int quantidade, Timestamp dataCriacao, int codigo) {
+    public Produto(int id, String categoria, String nome, String descricao, double preco, int quantidade, Timestamp dataCriacao, int codigo) {
         this.id = id;
         this.categoria = categoria;
         this.nome = nome;
@@ -21,6 +21,15 @@ public class Produto {
         this.preco = preco;
         this.quantidade = quantidade;
         this.dataCriacao = dataCriacao;
+        this.codigo = codigo;
+    }
+
+    public Produto(int codigo, String categoria, String nome, String descricao, double preco, int quantidade) {
+        this.categoria = categoria;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.preco = preco;
+        this.quantidade = quantidade;
         this.codigo = codigo;
     }
 
@@ -72,12 +81,12 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public BigDecimal getPreco() {
+    public Double getPreco() {
 
         return preco;
     }
 
-    public void setPreco(BigDecimal preco) {
+    public void setPreco(Double preco) {
 
         this.preco = preco;
     }

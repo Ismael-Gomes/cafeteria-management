@@ -36,7 +36,7 @@ public class ProdutoDAO {
                 String categoria = rs.getString("categoria");
                 String nome = rs.getString("nome");
                 String descricao = rs.getString("descricao");
-                BigDecimal preco = rs.getBigDecimal("preco");
+                double preco = rs.getDouble("preco");
                 int quantidade = rs.getInt("quantidade");
                 Timestamp dataCriacao = rs.getTimestamp("data_criacao");
                 Produto produto = new Produto(id, categoria, nome, descricao, preco, quantidade, dataCriacao, codigo);
@@ -60,7 +60,7 @@ public class ProdutoDAO {
                 int codigo = rs.getInt("codigo");
                 String nome = rs.getString("nome");
                 String descricao = rs.getString("descricao");
-                BigDecimal preco = rs.getBigDecimal("preco");
+                double preco = rs.getDouble("preco");
                 int quantidade = rs.getInt("quantidade");
                 Timestamp dataCriacao = rs.getTimestamp("data_criacao");
                 Produto produto = new Produto(id, rs.getString("categoria"), nome, descricao, preco, quantidade, dataCriacao, codigo);
@@ -74,14 +74,15 @@ public class ProdutoDAO {
     }
 
     public void insertProduct(Produto produto) throws SQLException {
-        String sql = "INSERT INTO produto (categoria, nome, descricao, preco, quantidade) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO produto (codigo, categoria, nome, descricao, preco, quantidade) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conexao = conection();
             PreparedStatement ps = conexao.prepareStatement(sql)) {
-            ps.setString(1, produto.getCategoria());
-            ps.setString(2, produto.getNome());
-            ps.setString(3, produto.getDescricao());
-            ps.setBigDecimal(4, produto.getPreco());
-            ps.setInt(5, produto.getQuantidade());
+            ps.setInt(1, produto.getCodigo());
+            ps.setString(2, produto.getCategoria());
+            ps.setString(3, produto.getNome());
+            ps.setString(4, produto.getDescricao());
+            ps.setDouble(5, produto.getPreco());
+            ps.setInt(6, produto.getQuantidade());
             ps.executeUpdate();
         }catch(SQLException e){
             LOGGER.log(Level.SEVERE, "Erro ao inserir produto", e);
@@ -95,7 +96,7 @@ public class ProdutoDAO {
             ps.setString(1, produto.getCategoria());
             ps.setString(2, produto.getNome());
             ps.setString(3, produto.getDescricao());
-            ps.setBigDecimal(4, produto.getPreco());
+            ps.setDouble(4, produto.getPreco());
             ps.setInt(5, produto.getQuantidade());
             ps.setInt(6, produto.getId());
             ps.executeUpdate();
