@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.sql.*;
-import java.math.BigDecimal;
 
 public class ProdutoDAO {
     
@@ -38,8 +37,8 @@ public class ProdutoDAO {
                 String descricao = rs.getString("descricao");
                 double preco = rs.getDouble("preco");
                 int quantidade = rs.getInt("quantidade");
-                Timestamp dataCriacao = rs.getTimestamp("data_criacao");
-                Produto produto = new Produto(id, categoria, nome, descricao, preco, quantidade, dataCriacao, codigo);
+                Date dataCriacao = rs.getDate("data_criacao");
+                Produto produto = new Produto(id, codigo, categoria, nome, descricao, preco, quantidade, dataCriacao);
                 produtos.add(produto);
             }
         }catch(SQLException e){
@@ -62,8 +61,8 @@ public class ProdutoDAO {
                 String descricao = rs.getString("descricao");
                 double preco = rs.getDouble("preco");
                 int quantidade = rs.getInt("quantidade");
-                Timestamp dataCriacao = rs.getTimestamp("data_criacao");
-                Produto produto = new Produto(id, rs.getString("categoria"), nome, descricao, preco, quantidade, dataCriacao, codigo);
+                Date dataCriacao = rs.getDate("data_criacao");
+                Produto produto = new Produto(id, codigo, rs.getString("categoria"), nome, descricao, preco, quantidade, dataCriacao);
                 produtos.add(produto);
             }
                 
@@ -74,7 +73,7 @@ public class ProdutoDAO {
     }
 
     public void insertProduct(Produto produto) throws SQLException {
-        String sql = "INSERT INTO produto (codigo, categoria, nome, descricao, preco, quantidade) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO produto (id, data_criacao, codigo, categoria, nome, descricao, preco, quantidade) VALUES (NULL, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?)";
         try (Connection conexao = conection();
             PreparedStatement ps = conexao.prepareStatement(sql)) {
             ps.setInt(1, produto.getCodigo());

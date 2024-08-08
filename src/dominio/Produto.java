@@ -1,6 +1,6 @@
 package dominio;
 
-import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Produto {
@@ -10,10 +10,10 @@ public class Produto {
     private String descricao;
     private double preco;
     private int quantidade;
-    private Timestamp dataCriacao;
+    private Date dataCriacao;
     private int codigo;
 
-    public Produto(int id, String categoria, String nome, String descricao, double preco, int quantidade, Timestamp dataCriacao, int codigo) {
+    public Produto(int id, int codigo, String categoria, String nome, String descricao, double preco, int quantidade, Date dataCriacao) {
         this.id = id;
         this.categoria = categoria;
         this.nome = nome;
@@ -50,7 +50,7 @@ public class Produto {
 
         this.categoria = categoria;
     }
-    
+
     public int getId() {
 
         return id;
@@ -101,12 +101,12 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    public Timestamp getDataCriacao() {
+    public Date getDataCriacao() {
 
         return dataCriacao;
     }
 
-    public void setDataCriacao(Timestamp dataCriacao) {
+    public void setDataCriacao(Date dataCriacao) {
 
         this.dataCriacao = dataCriacao;
     }

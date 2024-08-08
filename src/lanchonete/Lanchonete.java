@@ -1,7 +1,8 @@
 package lanchonete;
 
+import java.sql.Date;
 import java.util.Scanner;
-
+import dominio.Produto;
 import negocio.AdminNegocio;
 import negocio.ProdutoNegocio;
 import negocio.VendaNegocio;
@@ -253,6 +254,46 @@ public class Lanchonete {
                                         case 1:
                                             break;
                                         case 2:
+                                            System.out.println("\n## Escolha uma Categoria ##");
+                                            System.out.println("===========================");
+                                            System.out.println("## 1 = Lanche            ##");
+                                            System.out.println("## 2 = Acompanhamentos   ##");
+                                            System.out.println("## 3 = Bebidas           ##");
+                                            System.out.println("===========================\n");
+                                            boolean encontrado = true;
+                                            int codigo = 0;
+                                            do {
+                                                System.out.print("Digite a Categoria: ");
+                                                int categoriaEscolha = sc.nextInt();
+                                                if (categoriaEscolha == 1) {
+                                                    categoria = "Lanche";
+                                                    codigo = 1;
+                                                } else if (categoriaEscolha == 2) {
+                                                    categoria = "Acompanhamento";
+                                                    codigo = 2;
+                                                } else if (categoriaEscolha == 3) {
+                                                    categoria = "Bebida";
+                                                    codigo = 3;
+                                                } else {
+                                                    System.out.println("Categoria não encontrada!");
+                                                    encontrado = false;
+                                                }
+                                            }while(!encontrado);
+                                            System.out.print("Digite o Nome: ");
+                                            String nome = sc.next();
+                                            System.out.print("Digite a Descrição: ");
+                                            String descricao = sc.next();
+                                            System.out.print("Digite o Preço: ");
+                                            double preco = sc.nextDouble();
+                                            System.out.print("Digite a Quantidade: ");
+                                            int quantidade = sc.nextInt();
+                                            try {
+                                                Produto produto = new Produto(codigo, categoria, nome, descricao, preco, quantidade);
+                                                produtoNegocio.insertProduct(produto);
+                                            }catch (Exception e) {
+                                                System.out.println("Erro " + e.getMessage());
+                                            }
+
                                             break;
                                         case 3:
                                             break;
