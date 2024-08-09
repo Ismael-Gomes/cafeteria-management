@@ -7,6 +7,27 @@ import negocio.ProdutoNegocio;
 
 public class GerenciadorDeProdutos {
 
+    public void sequenciaTodos(){
+        ProdutoNegocio produtoNegocio = new ProdutoNegocio();
+        List<Produto> produtos;
+
+        try {
+            produtos = produtoNegocio.searchAll();
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar os produtos: " + e.getMessage());
+            return;
+        }
+
+        int sequencia = 1;
+        for (Produto produto : produtos) {
+            System.out.println("\n#### Produto " + sequencia);
+            System.out.println("=============================");
+            System.out.println(produto.toString());
+            sequencia++;
+        }
+
+    }
+
     public void viewProductsSequenceLanche() {
         sequencia("Lanche");
     }
