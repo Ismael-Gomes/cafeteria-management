@@ -104,17 +104,6 @@ public class ProdutoDAO {
         }
     }
     
-    public void dropProduct(int id) throws SQLException {
-        String sql = "DELETE FROM produto WHERE id = ?";
-        try (Connection conexao = conection();
-            PreparedStatement ps = conexao.prepareStatement(sql)){
-            ps.setInt(1, id);
-            ps.executeUpdate();
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Erro ao deletar produto", e);
-        }
-    }
-    
     public boolean updateInventory(int produtoCodigo, int quantidadeVendida) throws SQLException {
         String sql = "UPDATE produto SET quantidade = quantidade - ? WHERE codigo = ?";
         String sqlQuantity = "SELECT quantidade FROM produto WHERE codigo = ?";
