@@ -95,8 +95,6 @@ public class Lanchonete {
                     }
                     gerenciadorLanches.viewProductsSequenceLanche();
                     comprarProduto(sc);
-
-
                     break;
 
                 case 2:
@@ -208,7 +206,7 @@ public class Lanchonete {
         AdminNegocio adminNegocio = new AdminNegocio();
 
         while (!back) {
-            System.out.println("#########    ADMIN    ########");
+            System.out.println("\n#########    ADMIN    ########");
             System.out.println("==============================");
             System.out.println("##### 1 - Login          #####");
             System.out.println("##### 0 - Sair           #####");
@@ -224,174 +222,239 @@ public class Lanchonete {
                     String senha = sc.next();
                     if (isValidMatricula(matricula) && isValidSenha(senha)) {
                         if (adminNegocio.verificarCredenciais(matricula, senha)) {
-                            clearScreen();
-                            System.out.println("Login bem-sucedido! Bem-vindo à área administrativa.");
-                            // Prossiga para a tela de administração
-                            System.out.println("#########        Controle      ########");
-                            System.out.println("=======================================");
-                            System.out.println("##### 1 - Gerenciar Produto       #####");
-                            System.out.println("##### 2 - Gerenciar Funcionário   #####");
-                            System.out.println("##### 3 - Gerenciar Cliente       #####");
-                            System.out.println("##### 4 - Gerenciar Vendas        #####");
-                            System.out.println("##### 5 - Relatórios              #####");
-                            System.out.println("##### 0 - Sair                    #####");
-                            System.out.println("=======================================");
-                            System.out.print("##### Escolha uma opção: ");
-                            int choiceControl = sc.nextInt();
-                            switch (choiceControl) {
-                                case 1:
-                                    System.out.println("#########   Gerenciar Produto   ########");
-                                    System.out.println("========================================");
-                                    System.out.println("##### 1 - Ver Produtos             #####");
-                                    System.out.println("##### 2 - Adicionar Produtos       #####");
-                                    System.out.println("##### 3 - Modificar Produtos       #####");
-                                    System.out.println("##### 4 - Relatórios               #####");
-                                    System.out.println("##### 0 - Sair                     #####");
-                                    System.out.println("========================================");
-                                    System.out.print("##### Escolha uma opção: ");
-                                    int choiceProd = sc.nextInt();
-                                    switch (choiceProd){
-                                        case 1:
-                                            break;
-                                        case 2:
-                                            System.out.println("\n## Escolha uma Categoria ##");
-                                            System.out.println("===========================");
-                                            System.out.println("## 1 = Lanche            ##");
-                                            System.out.println("## 2 = Acompanhamentos   ##");
-                                            System.out.println("## 3 = Bebidas           ##");
-                                            System.out.println("===========================\n");
-                                            boolean encontrado = true;
-                                            int codigo = 0;
-                                            do {
-                                                System.out.print("Digite a Categoria: ");
-                                                int categoriaEscolha = sc.nextInt();
-                                                if (categoriaEscolha == 1) {
-                                                    categoria = "Lanche";
-                                                    codigo = 1;
-                                                } else if (categoriaEscolha == 2) {
-                                                    categoria = "Acompanhamento";
-                                                    codigo = 2;
-                                                } else if (categoriaEscolha == 3) {
-                                                    categoria = "Bebida";
-                                                    codigo = 3;
-                                                } else {
-                                                    System.out.println("Categoria não encontrada!");
-                                                    encontrado = false;
-                                                }
-                                            }while(!encontrado);
-                                            System.out.print("Digite o Nome: ");
-                                            String nome = sc.next();
-                                            System.out.print("Digite a Descrição: ");
-                                            String descricao = sc.next();
-                                            System.out.print("Digite o Preço: ");
-                                            double preco = sc.nextDouble();
-                                            System.out.print("Digite a Quantidade: ");
-                                            int quantidade = sc.nextInt();
-                                            try {
-                                                Produto produto = new Produto(codigo, categoria, nome, descricao, preco, quantidade);
-                                                produtoNegocio.insertProduct(produto);
-                                            }catch (Exception e) {
-                                                System.out.println("Erro " + e.getMessage());
+                            boolean backControl = false;
+                            while (!backControl) {
+                                System.out.println("\nLogin bem-sucedido! Bem-vindo à área administrativa.");
+                                System.out.println("\n#########        Controle      ########");
+                                System.out.println("=======================================");
+                                System.out.println("##### 1 - Gerenciar Produto       #####");
+                                System.out.println("##### 2 - Gerenciar Funcionário   #####");
+                                System.out.println("##### 3 - Gerenciar Cliente       #####");
+                                System.out.println("##### 4 - Gerenciar Vendas        #####");
+                                System.out.println("##### 5 - Relatórios              #####");
+                                System.out.println("##### 0 - Sair                    #####");
+                                System.out.println("=======================================");
+                                System.out.print("##### Escolha uma opção: ");
+                                int choiceControl = sc.nextInt();
+                                clearScreen();
+                                switch (choiceControl) {
+                                    case 1:
+                                        boolean backProd = false;
+                                        while (!backProd){
+                                            System.out.println("#########   Gerenciar Produto   ########");
+                                            System.out.println("========================================");
+                                            System.out.println("##### 1 - Ver Produtos             #####");
+                                            System.out.println("##### 2 - Adicionar Produtos       #####");
+                                            System.out.println("##### 3 - Modificar Produtos       #####");
+                                            System.out.println("##### 4 - Relatórios               #####");
+                                            System.out.println("##### 0 - Sair                     #####");
+                                            System.out.println("========================================");
+                                            System.out.print("##### Escolha uma opção: ");
+                                            int choiceProd = sc.nextInt();
+                                            clearScreen();
+                                            switch (choiceProd) {
+                                                case 1:
+                                                    System.out.print("Precisa de alguma categoria especifica? 1 - SIM | 2 - NÃO: ");
+                                                    int escolha = sc.nextInt();
+                                                    GerenciadorDeProdutos gerenciadorLanches = new GerenciadorDeProdutos();
+                                                    if (escolha == 1) {
+                                                        System.out.println("\n## Escolha uma Categoria ##");
+                                                        System.out.println("===========================");
+                                                        System.out.println("## 1 = Lanche            ##");
+                                                        System.out.println("## 2 = Acompanhamentos   ##");
+                                                        System.out.println("## 3 = Bebidas           ##");
+                                                        System.out.println("===========================\n");
+                                                        boolean encontrado = true;
+                                                        do {
+                                                            try {
+                                                                System.out.print("Digite a Categoria: ");
+                                                                int categoriaEscolha = sc.nextInt();
+                                                                if (categoriaEscolha == 1) {
+                                                                    categoria = "Lanche";
+                                                                    produtoNegocio.searchByCategory(categoria);
+                                                                    gerenciadorLanches.viewProductsSequenceLanche();
+                                                                } else if (categoriaEscolha == 2) {
+                                                                    categoria = "Acompanhamento";
+                                                                    produtoNegocio.searchByCategory(categoria);
+                                                                    gerenciadorLanches.viewProductsSequenceAcompanhamento();
+                                                                } else if (categoriaEscolha == 3) {
+                                                                    categoria = "Bebida";
+                                                                    produtoNegocio.searchByCategory(categoria);
+                                                                    gerenciadorLanches.viewProductsSequenceBebida();
+                                                                } else {
+                                                                    System.out.println("Categoria não encontrada!");
+                                                                    encontrado = false;
+                                                                }
+                                                            } catch (Exception e) {
+                                                                System.out.println("Erro " + e.getMessage());
+                                                            }
+                                                        } while (!encontrado);
+                                                    } else if (escolha == 2) {
+                                                        try {
+                                                            produtoNegocio.searchAll();
+                                                            gerenciadorLanches.sequenciaTodos();
+                                                        } catch (Exception e) {
+                                                            System.out.println("Erro " + e.getMessage());
+                                                        }
+                                                    } else {
+                                                        System.out.println("Opção Inválida!");
+                                                    }
+                                                    System.out.println("Tecle ENTER para Sair...");
+                                                    break;
+                                                case 2:
+                                                    System.out.println("\n## Escolha uma Categoria ##");
+                                                    System.out.println("===========================");
+                                                    System.out.println("## 1 = Lanche            ##");
+                                                    System.out.println("## 2 = Acompanhamentos   ##");
+                                                    System.out.println("## 3 = Bebidas           ##");
+                                                    System.out.println("===========================\n");
+                                                    boolean encontrado = true;
+                                                    int codigo = 0;
+                                                    do {
+                                                        System.out.print("Digite a Categoria: ");
+                                                        int categoriaEscolha = sc.nextInt();
+                                                        if (categoriaEscolha == 1) {
+                                                            categoria = "Lanche";
+                                                            codigo = 1;
+                                                        } else if (categoriaEscolha == 2) {
+                                                            categoria = "Acompanhamento";
+                                                            codigo = 2;
+                                                        } else if (categoriaEscolha == 3) {
+                                                            categoria = "Bebida";
+                                                            codigo = 3;
+                                                        } else {
+                                                            System.out.println("Categoria não encontrada!");
+                                                            encontrado = false;
+                                                        }
+                                                    } while (!encontrado);
+                                                    System.out.print("Digite o Nome: ");
+                                                    String nome = sc.next();
+                                                    System.out.print("Digite a Descrição: ");
+                                                    String descricao = sc.next();
+                                                    System.out.print("Digite o Preço: ");
+                                                    double preco = sc.nextDouble();
+                                                    System.out.print("Digite a Quantidade: ");
+                                                    int quantidade = sc.nextInt();
+                                                    try {
+                                                        Produto produto = new Produto(codigo, categoria, nome, descricao, preco, quantidade);
+                                                        produtoNegocio.insertProduct(produto);
+                                                        System.out.println("\nProduto Adicionado com Sucesso!");
+                                                        System.out.print("\nTecle ENTER para sair");
+                                                    } catch (Exception e) {
+                                                        System.out.println("Erro " + e.getMessage());
+                                                    }
+                                                    break;
+                                                case 3:
+                                                    break;
+                                                case 4:
+                                                    break;
+                                                case 0:
+                                                    backProd = true;
+                                                    break;
                                             }
-
-                                            break;
-                                        case 3:
-                                            break;
-                                        case 4:
-                                            break;
-                                        case 0:
-                                            back = true;
-                                            break;
-                                    }
-                                    break;
-                                case 2:
-                                    System.out.println("#######   Gerenciar Funcionário   ######");
-                                    System.out.println("========================================");
-                                    System.out.println("##### 1 - Cadastrar Funcionário    #####");
-                                    System.out.println("##### 2 - Ver Funcionários         #####");
-                                    System.out.println("##### 3 - Alterar Funcionários     #####");
-                                    System.out.println("##### 4 - Apagar Funcionários      #####");
-                                    System.out.println("##### 5 - Relatórios               #####");
-                                    System.out.println("##### 0 - Sair                     #####");
-                                    System.out.println("========================================");
-                                    System.out.print("##### Escolha uma opção: ");
-                                    int choiceFunc = sc.nextInt();
-                                    switch (choiceFunc){
-                                        case 1:
-                                            break;
-                                        case 2:
-                                            break;
-                                        case 3:
-                                            break;
-                                        case 4:
-                                            break;
-                                        case 5:
-                                            break;
-                                        case 0:
-                                            back = true;
-                                            break;
-                                    }
-                                    break;
-                                case 3:
-                                    System.out.println("#######    Gerenciar Clientes    ######");
-                                    System.out.println("=======================================");
-                                    System.out.println("##### 1 - Ver Clientes            #####");
-                                    System.out.println("##### 2 - Relatórios              #####");
-                                    System.out.println("##### 0 - Sair                    #####");
-                                    System.out.println("=======================================");
-                                    System.out.print("##### Escolha uma opção: ");
-                                    int choiceClien = sc.nextInt();
-                                    switch (choiceClien){
-                                        case 1:
-                                            break;
-                                        case 2:
-                                            break;
-                                        case 0:
-                                            back = true;
-                                            break;
-                                    }
-                                    break;
-                                case 4:
-                                    System.out.println("########    Gerenciar Vendas    #######");
-                                    System.out.println("=======================================");
-                                    System.out.println("##### 1 - Ver Vendas              #####");
-                                    System.out.println("##### 2 - Cancelar Venda          #####");
-                                    System.out.println("##### 3 - Relatórios              #####");
-                                    System.out.println("##### 0 - Sair                    #####");
-                                    System.out.println("=======================================");
-                                    System.out.print("##### Escolha uma opção: ");
-                                    int choiceVend = sc.nextInt();
-                                    switch (choiceVend){
-                                        case 1:
-                                            break;
-                                        case 2:
-                                            break;
-                                        case 3:
-                                            break;
-                                        case 0:
-                                            back = true;
-                                            break;
-                                    }
-                                    break;
-                                case 5:
-                                    System.out.println("#########    Relatório    ########");
-                                    System.out.println("==================================");
-                                    System.out.println("##### 1 - Ver Relatório      #####");
-                                    System.out.println("##### 0 - Sair               #####");
-                                    System.out.println("==================================");
-                                    System.out.print("##### Escolha uma opção: ");
-                                    int choiceRela = sc.nextInt();
-                                    switch (choiceRela){
-                                        case 1:
-                                            break;
-                                        case 0:
-                                            back = true;
-                                            break;
-                                    }
-                                    break;
-                                case 0:
-                                    back = true;
-                                    break;
+                                        }
+                                        break;
+                                    case 2:
+                                        boolean backFunc = false;
+                                        while (!backFunc) {
+                                            System.out.println("#######   Gerenciar Funcionário   ######");
+                                            System.out.println("========================================");
+                                            System.out.println("##### 1 - Cadastrar Funcionário    #####");
+                                            System.out.println("##### 2 - Ver Funcionários         #####");
+                                            System.out.println("##### 3 - Alterar Funcionários     #####");
+                                            System.out.println("##### 4 - Apagar Funcionários      #####");
+                                            System.out.println("##### 5 - Relatórios               #####");
+                                            System.out.println("##### 0 - Sair                     #####");
+                                            System.out.println("========================================");
+                                            System.out.print("##### Escolha uma opção: ");
+                                            int choiceFunc = sc.nextInt();
+                                            switch (choiceFunc) {
+                                                case 1:
+                                                    break;
+                                                case 2:
+                                                    break;
+                                                case 3:
+                                                    break;
+                                                case 4:
+                                                    break;
+                                                case 5:
+                                                    break;
+                                                case 0:
+                                                    backFunc = true;
+                                                    break;
+                                            }
+                                        }
+                                        break;
+                                    case 3:
+                                        boolean backClien = false;
+                                        while (!backClien) {
+                                            System.out.println("#######    Gerenciar Clientes    ######");
+                                            System.out.println("=======================================");
+                                            System.out.println("##### 1 - Ver Clientes            #####");
+                                            System.out.println("##### 2 - Relatórios              #####");
+                                            System.out.println("##### 0 - Sair                    #####");
+                                            System.out.println("=======================================");
+                                            System.out.print("##### Escolha uma opção: ");
+                                            int choiceClien = sc.nextInt();
+                                            switch (choiceClien) {
+                                                case 1:
+                                                    break;
+                                                case 2:
+                                                    break;
+                                                case 0:
+                                                    backFunc = true;
+                                                    break;
+                                            }
+                                        }
+                                        break;
+                                    case 4:
+                                        boolean backVenda = false;
+                                        while (!backVenda) {
+                                            System.out.println("########    Gerenciar Vendas    #######");
+                                            System.out.println("=======================================");
+                                            System.out.println("##### 1 - Ver Vendas              #####");
+                                            System.out.println("##### 2 - Cancelar Venda          #####");
+                                            System.out.println("##### 3 - Relatórios              #####");
+                                            System.out.println("##### 0 - Sair                    #####");
+                                            System.out.println("=======================================");
+                                            System.out.print("##### Escolha uma opção: ");
+                                            int choiceVend = sc.nextInt();
+                                            switch (choiceVend) {
+                                                case 1:
+                                                    break;
+                                                case 2:
+                                                    break;
+                                                case 3:
+                                                    break;
+                                                case 0:
+                                                    backVenda = true;
+                                                    break;
+                                            }
+                                        }
+                                        break;
+                                    case 5:
+                                        boolean backRela = false;
+                                        while (!backRela) {
+                                            System.out.println("#########    Relatório    ########");
+                                            System.out.println("==================================");
+                                            System.out.println("##### 1 - Ver Relatório      #####");
+                                            System.out.println("##### 0 - Sair               #####");
+                                            System.out.println("==================================");
+                                            System.out.print("##### Escolha uma opção: ");
+                                            int choiceRela = sc.nextInt();
+                                            switch (choiceRela) {
+                                                case 1:
+                                                    break;
+                                                case 0:
+                                                    backRela = true;
+                                                    break;
+                                            }
+                                        }
+                                        break;
+                                    case 0:
+                                        backControl = true;
+                                        break;
+                                }
                             }
                         } else {
                             if (adminNegocio.verificarMatricula(matricula)) {
