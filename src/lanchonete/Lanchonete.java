@@ -412,19 +412,13 @@ public class Lanchonete {
                                         while (!backVenda) {
                                             System.out.println("########    Gerenciar Vendas    #######");
                                             System.out.println("=======================================");
-                                            System.out.println("##### 1 - Ver Vendas              #####");
-                                            System.out.println("##### 2 - Cancelar Venda          #####");
-                                            System.out.println("##### 3 - Relatórios              #####");
+                                            System.out.println("##### 1 - Relatórios              #####");
                                             System.out.println("##### 0 - Sair                    #####");
                                             System.out.println("=======================================");
                                             System.out.print("##### Escolha uma opção: ");
                                             int choiceVend = sc.nextInt();
                                             switch (choiceVend) {
                                                 case 1:
-                                                    break;
-                                                case 2:
-                                                    break;
-                                                case 3:
                                                     break;
                                                 case 0:
                                                     backVenda = true;
