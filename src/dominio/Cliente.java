@@ -4,12 +4,10 @@ import java.sql.Date;
 
 public class Cliente {
 
-    private int codigo;
     private String nome, nomeConta, email, senha, cpf, sexo;
     private Date data_nascimento;
 
-    public Cliente(int codigo, String nome, String sexo, Date data_nascimento, String cpf, String nomeConta, String email, String senha) {
-        this.codigo = codigo;
+    public Cliente(String cpf, String nome, String nomeConta, String sexo, Date data_nascimento, String email, String senha) {
         this.nome = nome;
         this.nomeConta = nomeConta;
         this.email = email;

@@ -398,6 +398,14 @@ public class Lanchonete {
                                             int choiceClien = sc.nextInt();
                                             switch (choiceClien) {
                                                 case 1:
+                                                    try {
+                                                        PessoaNegocio pessoaNegocio = new PessoaNegocio();
+                                                        GerenciadorDeClientes gerenciadorClien = new GerenciadorDeClientes();
+                                                        pessoaNegocio.searchAll();
+                                                        gerenciadorClien.exibirClientesComSequencia();
+                                                    } catch (Exception e) {
+                                                        System.out.println("Erro " + e.getMessage());
+                                                    }
                                                     break;
                                                 case 2:
                                                     break;

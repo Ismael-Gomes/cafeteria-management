@@ -30,15 +30,14 @@ public class ClienteDAO {
             PreparedStatement ps = conexao.prepareStatement(sql);
             ResultSet rs = ps.executeQuery()){
           while (rs.next()) {
-            int codigo = rs.getInt("cod_cliente");
+            String cpf = rs.getString("cpf");
             String nome = rs.getString("nome");
             String sexo = rs.getString("sexo");
             Date data_nascimento = rs.getDate("data_nascimento");
-            String cpf = rs.getString("cpf");
             String nomeConta = rs.getString("nome_conta");
             String email = rs.getString("email");
             String senhaUsu = rs.getString("senha");
-            Cliente clien = new Cliente(codigo, nome, sexo, data_nascimento, cpf, nomeConta, email, senhaUsu);
+            Cliente clien = new Cliente(cpf, nome, nomeConta, sexo, data_nascimento, email, senhaUsu);
             clientes.add(clien);
           }
         }catch(SQLException e){
