@@ -410,7 +410,7 @@ public class Lanchonete {
                                                 case 2:
                                                     break;
                                                 case 0:
-                                                    backFunc = true;
+                                                    backClien = true;
                                                     break;
                                             }
                                         }
