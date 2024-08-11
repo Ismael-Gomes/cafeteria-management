@@ -89,15 +89,14 @@ public class ProdutoDAO {
     }
         
     public void updateProduct(Produto produto) throws SQLException {
-        String sql = "UPDATE produto SET categoria = ?, nome = ?, descricao = ?, preco = ?, quantidade = ? WHERE id = ?";
+        String sql = "UPDATE produto SET categoria = ?, nome = ?, descricao = ?, preco = ? WHERE id = ?";
         try (Connection conexao = conection();
             PreparedStatement ps = conexao.prepareStatement(sql)){
             ps.setString(1, produto.getCategoria());
             ps.setString(2, produto.getNome());
             ps.setString(3, produto.getDescricao());
             ps.setDouble(4, produto.getPreco());
-            ps.setInt(5, produto.getQuantidade());
-            ps.setInt(6, produto.getId());
+            ps.setInt(5, produto.getId());
             ps.executeUpdate();
         }catch(SQLException e){
             LOGGER.log(Level.SEVERE, "Erro ao atualizar produto", e);
