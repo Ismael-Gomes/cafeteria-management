@@ -16,7 +16,10 @@ public class Lanchonete {
     static ProdutoNegocio produtoNegocio = new ProdutoNegocio();
     static VendaNegocio vendaNegocio = new VendaNegocio();
 
-    private static String categoria;
+    private static String categoria, nome, descricao;
+    private static double preco;
+    private static int quantidade, codigo;
+    private static boolean encontrado = true;
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -308,7 +311,6 @@ public class Lanchonete {
                                                     System.out.println("## 2 = Acompanhamentos   ##");
                                                     System.out.println("## 3 = Bebidas           ##");
                                                     System.out.println("===========================\n");
-                                                    boolean encontrado = true;
                                                     int codigo = 0;
                                                     do {
                                                         System.out.print("Digite a Categoria: ");
@@ -345,6 +347,24 @@ public class Lanchonete {
                                                     }
                                                     break;
                                                 case 3:
+                                                    System.out.println("\nDigite o ID do produto: ");
+                                                    int id = sc.nextInt();
+                                                    System.out.print("Digite o Novo Nome: ");
+                                                    nome = sc.next();
+                                                    System.out.print("Digite a Nova Descrição: ");
+                                                    descricao = sc.next();
+                                                    System.out.print("Digite o Novo Preço: ");
+                                                    preco = sc.nextDouble();
+                                                    System.out.print("Digite a Nova Quantidade: ");
+                                                    quantidade = sc.nextInt();
+                                                    try {
+                                                        Produto produto = new Produto(id, nome, descricao, preco, quantidade);
+                                                        System.out.println("\nProduto Atualizado com Sucesso!");
+                                                        System.out.println("\nTecle ENTER para sair");
+                                                        produtoNegocio.updateProduct(produto);
+                                                    }catch (Exception e){
+                                                        System.out.println("Erro " + e.getMessage());
+                                                    }
                                                     break;
                                                 case 4:
                                                     break;

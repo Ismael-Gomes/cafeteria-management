@@ -25,4 +25,8 @@ public class ProdutoNegocio {
         return produtoDao.searchId(codigo);
     }
 
+    public void updateProduct(Produto produto) throws SQLException {
+        produtoDao.updateProduct(produto);
+    }
+
 }

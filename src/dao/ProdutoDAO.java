@@ -37,8 +37,7 @@ public class ProdutoDAO {
                 String descricao = rs.getString("descricao");
                 double preco = rs.getDouble("preco");
                 int quantidade = rs.getInt("quantidade");
-                Date dataCriacao = rs.getDate("data_criacao");
-                Produto produto = new Produto(id, codigo, categoria, nome, descricao, preco, quantidade, dataCriacao);
+                Produto produto = new Produto(id, codigo, categoria, nome, descricao, preco, quantidade);
                 produtos.add(produto);
             }
         }catch(SQLException e){
@@ -61,8 +60,7 @@ public class ProdutoDAO {
                 String descricao = rs.getString("descricao");
                 double preco = rs.getDouble("preco");
                 int quantidade = rs.getInt("quantidade");
-                Date dataCriacao = rs.getDate("data_criacao");
-                Produto produto = new Produto(id, codigo, rs.getString("categoria"), nome, descricao, preco, quantidade, dataCriacao);
+                Produto produto = new Produto(id, codigo, rs.getString("categoria"), nome, descricao, preco, quantidade);
                 produtos.add(produto);
             }
                 
@@ -89,13 +87,13 @@ public class ProdutoDAO {
     }
         
     public void updateProduct(Produto produto) throws SQLException {
-        String sql = "UPDATE produto SET categoria = ?, nome = ?, descricao = ?, preco = ? WHERE id = ?";
+        String sql = "UPDATE produto SET nome = ?, descricao = ?, preco = ?, quantidade = ? WHERE id = ?";
         try (Connection conexao = conection();
             PreparedStatement ps = conexao.prepareStatement(sql)){
-            ps.setString(1, produto.getCategoria());
-            ps.setString(2, produto.getNome());
-            ps.setString(3, produto.getDescricao());
-            ps.setDouble(4, produto.getPreco());
+            ps.setString(1, produto.getNome());
+            ps.setString(2, produto.getDescricao());
+            ps.setDouble(3, produto.getPreco());
+            ps.setInt(4, produto.getQuantidade());
             ps.setInt(5, produto.getId());
             ps.executeUpdate();
         }catch(SQLException e){

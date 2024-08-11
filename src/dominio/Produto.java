@@ -13,14 +13,13 @@ public class Produto {
     private Date dataCriacao;
     private int codigo;
 
-    public Produto(int id, int codigo, String categoria, String nome, String descricao, double preco, int quantidade, Date dataCriacao) {
+    public Produto(int id, int codigo, String categoria, String nome, String descricao, double preco, int quantidade) {
         this.id = id;
         this.categoria = categoria;
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
         this.quantidade = quantidade;
-        this.dataCriacao = dataCriacao;
         this.codigo = codigo;
     }
 
@@ -31,6 +30,14 @@ public class Produto {
         this.preco = preco;
         this.quantidade = quantidade;
         this.codigo = codigo;
+    }
+
+    public Produto(int id, String nome, String descricao, double preco, int quantidade) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.preco = preco;
+        this.quantidade = quantidade;
     }
 
     public int getCodigo() {
@@ -99,16 +106,6 @@ public class Produto {
     public void setQuantidade(int quantidade) {
 
         this.quantidade = quantidade;
-    }
-
-    public Date getDataCriacao() {
-
-        return dataCriacao;
-    }
-
-    public void setDataCriacao(Date dataCriacao) {
-
-        this.dataCriacao = dataCriacao;
     }
 
     @Override
