@@ -57,4 +57,18 @@ public class Funcionario {
     public int getQuantidadeVendas() {
         return quantidadeVendas;
     }
+
+    @Override
+    public String toString() {
+        return  "\n========================"
+                + "\nSituação: " + sitacao
+                + "\n========================\n"
+                + "\nNome: " + nome
+                + "\nE-mail: " + email
+                + "\nNúmero de Celular: " + numeroCelular
+                + "\nCPF: " + cpf
+                + "\nSalário: " + salario
+                + "\nQuantidade de Vendas: " + quantidadeVendas
+                + "\n================================";
+    }
 }
