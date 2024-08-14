@@ -1,15 +1,14 @@
 package lanchonete;
 
-import java.sql.Date;
 import java.util.Scanner;
+
 import dominio.Produto;
 import negocio.AdminNegocio;
 import negocio.ProdutoNegocio;
 import negocio.VendaNegocio;
 import negocio.PessoaNegocio;
 import negocio.SuporteNegocio;
-
-import java.util.List;
+import negocio.FuncionarioNegocio;
 
 public class Lanchonete {
 
@@ -392,6 +391,14 @@ public class Lanchonete {
                                                 case 1:
                                                     break;
                                                 case 2:
+                                                    try {
+                                                        FuncionarioNegocio funcionarioNegocio = new FuncionarioNegocio();
+                                                        GerenciadorDeFuncionarios gerenciadorFunc = new GerenciadorDeFuncionarios();
+                                                        funcionarioNegocio.searchAll();
+                                                        gerenciadorFunc.exibirFuncionariosComSequencia();
+                                                    } catch (Exception e) {
+                                                        System.out.println("Erro " + e.getMessage());
+                                                    }
                                                     break;
                                                 case 3:
                                                     break;
