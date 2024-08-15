@@ -101,4 +101,15 @@ public class FuncionarioDAO {
         }
     }
 
+    public void dropFuncionario(String cpf) throws SQLException {
+        String sql = "UPDATE funcionario SET situacao = 'Desligado', dataSaida = CURRENT_TIMESTAMP WHERE cpf = ?";
+        try (Connection conexao = conection();
+             PreparedStatement ps = conexao.prepareStatement(sql)){
+            ps.setString(1, cpf);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Erro ao demitir o funcionario", e);
+        }
+    }
+
 }
