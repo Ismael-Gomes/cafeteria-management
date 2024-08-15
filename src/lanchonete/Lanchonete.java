@@ -383,7 +383,7 @@ public class Lanchonete {
                                             System.out.println("##### 1 - Cadastrar Funcionário    #####");
                                             System.out.println("##### 2 - Ver Funcionários         #####");
                                             System.out.println("##### 3 - Alterar Funcionários     #####");
-                                            System.out.println("##### 4 - Apagar Funcionários      #####");
+                                            System.out.println("##### 4 - Demitir Funcionários      #####");
                                             System.out.println("##### 5 - Relatórios               #####");
                                             System.out.println("##### 0 - Sair                     #####");
                                             System.out.println("========================================");
@@ -397,7 +397,7 @@ public class Lanchonete {
                                                     System.out.print("Digite o CPF: ");
                                                     String cpf = sc.next();
                                                     if (isValidCPF(cpf)){
-                                                        System.out.print("Digite o Email: ");
+                                                        System.out.print("\nDigite o Email: ");
                                                         String email = sc.next();
                                                         System.out.print("Digite sua senha: ");
                                                         senha = sc.next();
@@ -408,7 +408,7 @@ public class Lanchonete {
                                                         Funcionario funcionario = new Funcionario(nome, email, senha, cpf, salario, numero_tele);
                                                         try {
                                                             funcionarioNegocio.insertFuncionario(funcionario);
-                                                            System.out.println("Funcionario cadastrado com Sucesso!");
+                                                            System.out.println("\nFuncionario cadastrado com Sucesso!\n");
                                                         }catch (SQLException e){
                                                             System.out.println("Erro " + e.getMessage());
                                                         }
@@ -418,7 +418,6 @@ public class Lanchonete {
                                                     break;
                                                 case 2:
                                                     try {
-
                                                         GerenciadorDeFuncionarios gerenciadorFunc = new GerenciadorDeFuncionarios();
                                                         funcionarioNegocio.searchAll();
                                                         gerenciadorFunc.exibirFuncionariosComSequencia();
@@ -427,8 +426,32 @@ public class Lanchonete {
                                                     }
                                                     break;
                                                 case 3:
+                                                    System.out.print("Digite o CPF do funcionario: ");
+                                                    cpf = sc.next();
+                                                    if (isValidCPF(cpf)){
+                                                        System.out.print("\nDigite o novo Nome: ");
+                                                        nome = sc.next();
+                                                        System.out.print("Digite o novo Email: ");
+                                                        String email = sc.next();
+                                                        System.out.print("Digite sua nova Senha: ");
+                                                        senha = sc.next();
+                                                        System.out.print("Digite o novo Salario: ");
+                                                        double salario = sc.nextDouble();
+                                                        System.out.print("Digite o novo Telefone: ");
+                                                        String numero_tele = sc.next();
+                                                        Funcionario funcionario = new Funcionario(nome, email, senha, cpf, salario, numero_tele);
+                                                        try {
+                                                            funcionarioNegocio.updateFuncionario(funcionario);
+                                                            System.out.println("\nFuncionario atualizado com Sucesso!\n");
+                                                        }catch (SQLException e){
+                                                            System.out.println("Erro " + e.getMessage());
+                                                        }
+                                                    }else{
+                                                        System.out.println("CPF Invalido!");
+                                                    }
                                                     break;
                                                 case 4:
+                                                    
                                                     break;
                                                 case 5:
                                                     break;
