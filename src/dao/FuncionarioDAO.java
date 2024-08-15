@@ -1,7 +1,6 @@
 package dao;
 
 import dominio.Funcionario;
-import dominio.Produto;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -69,4 +68,21 @@ public class FuncionarioDAO {
         }
         return funcionarios;
     }
+
+    public void insertFuncionario(Funcionario funcionario) throws SQLException {
+        String sql = "INSERT INTO funcionario (id_func, nome, email, senha, cpf, salario, numero_tele, situacao, quantidadeVendas, dataChegada) VALUES (NULL, ?, ?, ?, ?, ?, ?, 'Ativo', NULL, CURRENT_TIMESTAMP)";
+        try (Connection conexao = conection();
+             PreparedStatement ps = conexao.prepareStatement(sql)) {
+            ps.setString(1, funcionario.getNome());
+            ps.setString(2, funcionario.getEmail());
+            ps.setString(3, funcionario.getSenha());
+            ps.setString(4, funcionario.getCpf());
+            ps.setDouble(5, funcionario.getSalario());
+            ps.setString(6, funcionario.getNumeroCelular());
+            ps.executeUpdate();
+        }catch(SQLException e){
+            LOGGER.log(Level.SEVERE, "Erro ao inserir funcionário", e);
+        }
+    }
+
 }
