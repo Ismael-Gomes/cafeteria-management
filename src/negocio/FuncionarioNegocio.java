@@ -16,4 +16,8 @@ public class FuncionarioNegocio {
     public List<Funcionario> searchByCategory(String cpf) throws SQLException{
         return funcionarioDao.searchByCPF(cpf);
     }
+
+    public void insertFuncionario(Funcionario funcionario) throws SQLException{
+        funcionarioDao.insertFuncionario(funcionario);
+    }
 }
