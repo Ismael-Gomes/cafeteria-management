@@ -1,7 +1,9 @@
 package lanchonete;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
+import dominio.Funcionario;
 import dominio.Produto;
 import negocio.AdminNegocio;
 import negocio.ProdutoNegocio;
@@ -387,12 +389,36 @@ public class Lanchonete {
                                             System.out.println("========================================");
                                             System.out.print("##### Escolha uma opção: ");
                                             int choiceFunc = sc.nextInt();
+                                            FuncionarioNegocio funcionarioNegocio = new FuncionarioNegocio();
                                             switch (choiceFunc) {
                                                 case 1:
+                                                    System.out.print("Digite o nome: ");
+                                                    nome = sc.next();
+                                                    System.out.print("Digite o CPF: ");
+                                                    String cpf = sc.next();
+                                                    if (isValidCPF(cpf)){
+                                                        System.out.print("Digite o Email: ");
+                                                        String email = sc.next();
+                                                        System.out.print("Digite sua senha: ");
+                                                        senha = sc.next();
+                                                        System.out.print("Digite o salario: ");
+                                                        double salario = sc.nextDouble();
+                                                        System.out.print("Digite o Telefone: ");
+                                                        String numero_tele = sc.next();
+                                                        Funcionario funcionario = new Funcionario(nome, email, senha, cpf, salario, numero_tele);
+                                                        try {
+                                                            funcionarioNegocio.insertFuncionario(funcionario);
+                                                            System.out.println("Funcionario cadastrado com Sucesso!");
+                                                        }catch (SQLException e){
+                                                            System.out.println("Erro " + e.getMessage());
+                                                        }
+                                                    }else{
+                                                        System.out.println("CPF Invalido!");
+                                                    }
                                                     break;
                                                 case 2:
                                                     try {
-                                                        FuncionarioNegocio funcionarioNegocio = new FuncionarioNegocio();
+
                                                         GerenciadorDeFuncionarios gerenciadorFunc = new GerenciadorDeFuncionarios();
                                                         funcionarioNegocio.searchAll();
                                                         gerenciadorFunc.exibirFuncionariosComSequencia();
