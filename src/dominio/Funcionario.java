@@ -1,29 +1,38 @@
 package dominio;
 
 public class Funcionario {
-    private String nome, email, senha, cpf, sitacao, numeroCelular;
+    private String nome, email, senha, cpf, situacao, numeroCelular;
     private int quantidadeVendas;
     double salario;
 
-    public Funcionario(String nome, String email, String senha, String cpf, double salario, String numeroCelular, String sitacao, int quantidadeVendas) {
+    public Funcionario(String nome, String email, String senha, String cpf, double salario, String numeroCelular, String situacao, int quantidadeVendas) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.cpf = cpf;
         this.salario = salario;
         this.numeroCelular = numeroCelular;
-        this.sitacao = sitacao;
+        this.situacao = situacao;
         this.quantidadeVendas = quantidadeVendas;
     }
 
-    public Funcionario(String nome, String email, String cpf, String sitacao, int quantidadeVendas, double salario, String numeroCelular) {
+    public Funcionario(String nome, String email, String cpf, String situacao, int quantidadeVendas, double salario, String numeroCelular) {
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
-        this.sitacao = sitacao;
+        this.situacao = situacao;
         this.salario = salario;
         this.numeroCelular = numeroCelular;
         this.quantidadeVendas = quantidadeVendas;
+    }
+
+    public Funcionario(String nome, String email, String senha, String cpf, double salario, String numeroCelular) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.cpf = cpf;
+        this.salario = salario;
+        this.numeroCelular = numeroCelular;
     }
 
     public double getSalario(){
@@ -50,8 +59,8 @@ public class Funcionario {
         return cpf;
     }
 
-    public String getSitacao() {
-        return sitacao;
+    public String getSituacao() {
+        return situacao;
     }
 
     public int getQuantidadeVendas() {
@@ -61,7 +70,7 @@ public class Funcionario {
     @Override
     public String toString() {
         return  "\n========================"
-                + "\nSituação: " + sitacao
+                + "\nSituação: " + situacao
                 + "\n========================\n"
                 + "\nNome: " + nome
                 + "\nE-mail: " + email
