@@ -85,4 +85,20 @@ public class FuncionarioDAO {
         }
     }
 
+    public void updateFuncionario(Funcionario funcionario) throws SQLException {
+        String sql = "UPDATE funcionario SET nome = ?, email = ?, senha = ?, numero_tele = ?, salario = ? WHERE cpf = ?";
+        try (Connection conexao = conection();
+             PreparedStatement ps = conexao.prepareStatement(sql)){
+            ps.setString(1, funcionario.getNome());
+            ps.setString(2, funcionario.getEmail());
+            ps.setString(3, funcionario.getSenha());
+            ps.setString(4, funcionario.getNumeroCelular());
+            ps.setDouble(5, funcionario.getSalario());
+            ps.setString(6, funcionario.getCpf());
+            ps.executeUpdate();
+        }catch(SQLException e){
+            LOGGER.log(Level.SEVERE, "Erro ao atualizar Funcionario.", e);
+        }
+    }
+
 }
