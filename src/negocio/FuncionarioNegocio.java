@@ -20,4 +20,8 @@ public class FuncionarioNegocio {
     public void insertFuncionario(Funcionario funcionario) throws SQLException{
         funcionarioDao.insertFuncionario(funcionario);
     }
+
+    public void updateFuncionario(Funcionario funcionario) throws SQLException{
+        funcionarioDao.updateFuncionario(funcionario);
+    }
 }
