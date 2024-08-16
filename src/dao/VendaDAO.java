@@ -1,11 +1,12 @@
 
 package dao;
 
+import dominio.Produto;
 import dominio.Venda;
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,5 +40,25 @@ public class VendaDAO {
             throw e;
         }
     }
-    
+
+    public List<Venda> relVenda() throws SQLException {
+        List<Venda> vendas = new ArrayList<>();
+        String sql = "SELECT id_produto, acao, data_acao, detalhes FROM produto_auditoria";
+        try (Connection conexao = conection();
+             PreparedStatement ps = conexao.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                int idProduto = rs.getInt("id_produto");
+                String acao = rs.getString("acao");
+                Timestamp dataAcao = rs.getTimestamp("data_acao");
+                String detalhe = rs.getString("detalhes");
+                Venda venda = new Venda(idProduto, acao, dataAcao, detalhe);
+                vendas.add(venda);
+            }
+        }catch(SQLException e){
+            LOGGER.log(Level.SEVERE, "Erro ao buscar as vendas", e);
+        }
+        return vendas;
+    }
+
 }

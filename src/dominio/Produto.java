@@ -1,7 +1,5 @@
 package dominio;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 
 public class Produto {
     private int id;
@@ -10,7 +8,6 @@ public class Produto {
     private String descricao;
     private double preco;
     private int quantidade;
-    private Date dataCriacao;
     private int codigo;
 
     public Produto(int id, int codigo, String categoria, String nome, String descricao, double preco, int quantidade) {

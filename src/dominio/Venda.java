@@ -1,5 +1,6 @@
 package dominio;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Venda {
@@ -8,12 +9,29 @@ public class Venda {
     private int produtoId;
     private int quantidade;
     private Timestamp dataVenda;
+    private String acao;
+    private String detalhe;
 
     public Venda(int id, int produtoId, int quantidade, Timestamp dataVenda) {
         this.id = id;
         this.produtoId = produtoId;
         this.quantidade = quantidade;
         this.dataVenda = dataVenda;
+    }
+
+    public Venda(int produtoId, String acao, Timestamp dataVenda, String detalhe){
+        this.produtoId = produtoId;
+        this.acao = acao;
+        this.dataVenda = dataVenda;
+        this.detalhe = detalhe;
+    }
+
+    public String getAcao(){
+        return acao;
+    }
+
+    public String getDetalhe(){
+        return detalhe;
     }
 
     public int getId() {
@@ -55,6 +73,14 @@ public class Venda {
 
         this.dataVenda = dataVenda;
     }
-    
+
+    @Override
+    public String toString() {
+        return  "#### ID do Produto: "+ produtoId +
+                "\n#### Ação: " + acao +
+                "\n#### Data da Venda: " + dataVenda +
+                "\n#### Detalhes: \n" + detalhe +
+                "\n=============================";
+    }
     
 }

@@ -16,9 +16,13 @@ public class Lanchonete {
 
     static ProdutoNegocio produtoNegocio = new ProdutoNegocio();
     static VendaNegocio vendaNegocio = new VendaNegocio();
+    static FuncionarioNegocio funcionarioNegocio = new FuncionarioNegocio();
+    static SuporteNegocio suporteNegocio = new SuporteNegocio();
+    static AdminNegocio adminNegocio = new AdminNegocio();
+    static PessoaNegocio pessoaNegocio = new PessoaNegocio();
 
-    private static String categoria, nome, descricao;
-    private static double preco;
+    private static String categoria, nome, descricao, cpf, numero_tele, email, senha, matricula;
+    private static double preco, salario;
     private static int quantidade, codigo;
     private static boolean encontrado = true;
 
@@ -72,71 +76,91 @@ public class Lanchonete {
 
     }
 
+    //OK
     private static void menuOpcao1(Scanner sc) throws InterruptedException {
         boolean back = false;
 
         while (!back) {
-            System.out.println("\n######    Cardápio    #######");
-            System.out.println("===============================");
-            System.out.println("##### 1 - Lanche          #####");
-            System.out.println("##### 2 - Acompanhamento  #####");
-            System.out.println("##### 3 - Bebida          #####");
-            System.out.println("##### 0 - Voltar          #####");
-            System.out.println("===============================");
-            System.out.print("##### Escolha uma opção: ");
-            int choice = sc.nextInt();
-            clearScreen();
+            System.out.print("Digite o CPF do vendedor: ");
+            String cpfVendedor = sc.next();
+            if (isValidCPF(cpfVendedor)) {
+                System.out.println("\n######    Cardápio    #######");
+                System.out.println("===============================");
+                System.out.println("##### 1 - Lanche          #####");
+                System.out.println("##### 2 - Acompanhamento  #####");
+                System.out.println("##### 3 - Bebida          #####");
+                System.out.println("##### 0 - Voltar          #####");
+                System.out.println("===============================");
+                System.out.print("##### Escolha uma opção: ");
+                int choice = sc.nextInt();
+                clearScreen();
 
-            switch (choice) {
-                case 1:
-                    categoria = "Lanche";
-                    System.out.println("\n##### Esses são nossos lanches: ");
-                    GerenciadorDeProdutos gerenciadorLanches = new GerenciadorDeProdutos();
-                    try {
-                        produtoNegocio.searchByCategory(categoria);
-                    } catch (Exception e) {
-                        System.out.println("Erro " + e.getMessage());
-                    }
-                    gerenciadorLanches.viewProductsSequenceLanche();
-                    comprarProduto(sc);
-                    break;
+                switch (choice) {
+                    case 1:
+                        try {
+                            categoria = "Lanche";
+                            System.out.println("\n##### Esses são nossos lanches: ");
+                            GerenciadorDeProdutos gerenciadorLanches = new GerenciadorDeProdutos();
+                            try {
+                                produtoNegocio.searchByCategory(categoria);
+                            } catch (Exception e) {
+                                System.out.println("Erro " + e.getMessage());
+                            }
+                            gerenciadorLanches.viewProductsSequenceLanche();
+                            comprarProduto(sc);
+                            funcionarioNegocio.vendaFuncionario(cpfVendedor);
+                        }catch (SQLException e) {
+                            System.out.println("Erro " + e.getMessage());
+                        }
+                        break;
+                    case 2:
+                        try{
+                            categoria = "Acompanhamento";
+                            System.out.println("\n##### Esses são nossos acompanhamentos: ");
+                            GerenciadorDeProdutos gerenciadorAcompanhamentos = new GerenciadorDeProdutos();
+                            try {
+                                produtoNegocio.searchByCategory(categoria);
+                            } catch (Exception e) {
+                                System.out.println("Erro " + e.getMessage());
+                            }
+                            gerenciadorAcompanhamentos.viewProductsSequenceAcompanhamento();
+                            comprarProduto(sc);
+                            funcionarioNegocio.vendaFuncionario(cpfVendedor);
+                        }catch (SQLException e) {
+                            System.out.println("Erro " + e.getMessage());
+                        }
+                        break;
+                    case 3:
+                        try{
+                            categoria = "Bebida";
+                            System.out.println("\n##### Essas são nossas bebidas: ");
+                            GerenciadorDeProdutos gerenciadorProdutos = new GerenciadorDeProdutos();
+                            try {
+                                produtoNegocio.searchByCategory(categoria);
+                            } catch (Exception e) {
+                                System.out.println("Erro " + e.getMessage());
+                            }
+                            gerenciadorProdutos.viewProductsSequenceBebida();
+                            comprarProduto(sc);
+                            funcionarioNegocio.vendaFuncionario(cpfVendedor);
+                            break;
+                        }catch (SQLException e) {
+                            System.out.println("Erro " + e.getMessage());
+                        }
+                    case 0:
+                        back = true;
+                        break;
 
-                case 2:
-                    categoria = "Acompanhamento";
-                    System.out.println("\n##### Esses são nossos acompanhamentos: ");
-                    GerenciadorDeProdutos gerenciadorAcompanhamentos = new GerenciadorDeProdutos();
-                    try {
-                        produtoNegocio.searchByCategory(categoria);
-                    } catch (Exception e) {
-                        System.out.println("Erro " + e.getMessage());
-                    }
-                    gerenciadorAcompanhamentos.viewProductsSequenceAcompanhamento();
-                    comprarProduto(sc);
-                    break;
-
-                case 3:
-                    categoria = "Bebida";
-                    System.out.println("\n##### Essas são nossas bebidas: ");
-                    GerenciadorDeProdutos gerenciadorProdutos = new GerenciadorDeProdutos();
-                    try {
-                        produtoNegocio.searchByCategory(categoria);
-                    } catch (Exception e) {
-                        System.out.println("Erro " + e.getMessage());
-                    }
-                    gerenciadorProdutos.viewProductsSequenceBebida();
-                    comprarProduto(sc);
-                    break;
-
-                case 0:
-                    back = true;
-                    break;
-
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                    default:
+                        System.out.println("Opção inválida. Tente novamente.");
+                }
+            }else{
+                System.out.print("\nCPF Invalido!\n");
             }
         }
     }
 
+    //A fazer
     private static void menuOpcao2(Scanner sc) throws InterruptedException {
         boolean back = false;
 
@@ -167,9 +191,9 @@ public class Lanchonete {
         }
     }
 
+    //1 BUG
     private static void menuOpcao3(Scanner sc) throws InterruptedException {
         boolean back = false;
-        SuporteNegocio suporte = new SuporteNegocio();
         while (!back) {
             System.out.println("#########      Suporte     ########");
             System.out.println("===================================");
@@ -191,7 +215,7 @@ public class Lanchonete {
                         String descricao = sc.next();
                         sc.nextLine();
                         try {
-                            suporte.insertSuport(cpf, cpf, descricao, nome);
+                            suporteNegocio.insertSuport(cpf, cpf, descricao, nome);
                         } catch (Exception e) {
                             System.out.println("Erro " + e.getMessage());
                         }
@@ -207,8 +231,6 @@ public class Lanchonete {
 
     private static void menuOpcao4(Scanner sc) throws InterruptedException {
         boolean back = false;
-        AdminNegocio adminNegocio = new AdminNegocio();
-
         while (!back) {
             System.out.println("\n#########    ADMIN    ########");
             System.out.println("==============================");
@@ -221,9 +243,9 @@ public class Lanchonete {
             switch (choice) {
                 case 1:
                     System.out.print("Matricula: ");
-                    String matricula = sc.next();
+                    matricula = sc.next();
                     System.out.print("Senha: ");
-                    String senha = sc.next();
+                    senha = sc.next();
                     if (isValidMatricula(matricula) && isValidSenha(senha)) {
                         if (adminNegocio.verificarCredenciais(matricula, senha)) {
                             boolean backControl = false;
@@ -235,13 +257,13 @@ public class Lanchonete {
                                 System.out.println("##### 2 - Gerenciar Funcionário   #####");
                                 System.out.println("##### 3 - Gerenciar Cliente       #####");
                                 System.out.println("##### 4 - Gerenciar Vendas        #####");
-                                System.out.println("##### 5 - Relatórios              #####");
                                 System.out.println("##### 0 - Sair                    #####");
                                 System.out.println("=======================================");
                                 System.out.print("##### Escolha uma opção: ");
                                 int choiceControl = sc.nextInt();
                                 clearScreen();
                                 switch (choiceControl) {
+                                    //OK
                                     case 1:
                                         boolean backProd = false;
                                         while (!backProd){
@@ -250,7 +272,6 @@ public class Lanchonete {
                                             System.out.println("##### 1 - Ver Produtos             #####");
                                             System.out.println("##### 2 - Adicionar Produtos       #####");
                                             System.out.println("##### 3 - Modificar Produtos       #####");
-                                            System.out.println("##### 4 - Relatórios               #####");
                                             System.out.println("##### 0 - Sair                     #####");
                                             System.out.println("========================================");
                                             System.out.print("##### Escolha uma opção: ");
@@ -331,13 +352,13 @@ public class Lanchonete {
                                                         }
                                                     } while (!encontrado);
                                                     System.out.print("Digite o Nome: ");
-                                                    String nome = sc.next();
+                                                    nome = sc.next();
                                                     System.out.print("Digite a Descrição: ");
-                                                    String descricao = sc.next();
+                                                    descricao = sc.next();
                                                     System.out.print("Digite o Preço: ");
-                                                    double preco = sc.nextDouble();
+                                                    preco = sc.nextDouble();
                                                     System.out.print("Digite a Quantidade: ");
-                                                    int quantidade = sc.nextInt();
+                                                    quantidade = sc.nextInt();
                                                     try {
                                                         Produto produto = new Produto(codigo, categoria, nome, descricao, preco, quantidade);
                                                         produtoNegocio.insertProduct(produto);
@@ -367,14 +388,14 @@ public class Lanchonete {
                                                         System.out.println("Erro " + e.getMessage());
                                                     }
                                                     break;
-                                                case 4:
-                                                    break;
                                                 case 0:
                                                     backProd = true;
                                                     break;
                                             }
                                         }
                                         break;
+
+                                    //OK
                                     case 2:
                                         boolean backFunc = false;
                                         while (!backFunc) {
@@ -383,28 +404,26 @@ public class Lanchonete {
                                             System.out.println("##### 1 - Cadastrar Funcionário    #####");
                                             System.out.println("##### 2 - Ver Funcionários         #####");
                                             System.out.println("##### 3 - Alterar Funcionários     #####");
-                                            System.out.println("##### 4 - Demitir Funcionários      #####");
-                                            System.out.println("##### 5 - Relatórios               #####");
+                                            System.out.println("##### 4 - Demitir Funcionários     #####");
                                             System.out.println("##### 0 - Sair                     #####");
                                             System.out.println("========================================");
                                             System.out.print("##### Escolha uma opção: ");
                                             int choiceFunc = sc.nextInt();
-                                            FuncionarioNegocio funcionarioNegocio = new FuncionarioNegocio();
                                             switch (choiceFunc) {
                                                 case 1:
                                                     System.out.print("Digite o nome: ");
                                                     nome = sc.next();
                                                     System.out.print("Digite o CPF: ");
-                                                    String cpf = sc.next();
+                                                    cpf = sc.next();
                                                     if (isValidCPF(cpf)){
                                                         System.out.print("\nDigite o Email: ");
-                                                        String email = sc.next();
+                                                        email = sc.next();
                                                         System.out.print("Digite sua senha: ");
                                                         senha = sc.next();
                                                         System.out.print("Digite o salario: ");
-                                                        double salario = sc.nextDouble();
+                                                        salario = sc.nextDouble();
                                                         System.out.print("Digite o Telefone: ");
-                                                        String numero_tele = sc.next();
+                                                        numero_tele = sc.next();
                                                         Funcionario funcionario = new Funcionario(nome, email, senha, cpf, salario, numero_tele);
                                                         try {
                                                             funcionarioNegocio.insertFuncionario(funcionario);
@@ -451,9 +470,18 @@ public class Lanchonete {
                                                     }
                                                     break;
                                                 case 4:
-                                                    
-                                                    break;
-                                                case 5:
+                                                    System.out.print("Digite o CPF do funcionario: ");
+                                                    cpf = sc.next();
+                                                    if (isValidCPF(cpf)){
+                                                        try {
+                                                            funcionarioNegocio.dropFuncionario(cpf);
+                                                            System.out.println("\nFuncionario demitido com Sucesso!\n");
+                                                        }catch (SQLException e){
+                                                            System.out.println("Erro " + e.getMessage());
+                                                        }
+                                                    }else{
+                                                        System.out.println("CPF Invalido!");
+                                                    }
                                                     break;
                                                 case 0:
                                                     backFunc = true;
@@ -461,6 +489,8 @@ public class Lanchonete {
                                             }
                                         }
                                         break;
+
+                                    //A fazer
                                     case 3:
                                         boolean backClien = false;
                                         while (!backClien) {
@@ -475,7 +505,6 @@ public class Lanchonete {
                                             switch (choiceClien) {
                                                 case 1:
                                                     try {
-                                                        PessoaNegocio pessoaNegocio = new PessoaNegocio();
                                                         GerenciadorDeClientes gerenciadorClien = new GerenciadorDeClientes();
                                                         pessoaNegocio.searchAll();
                                                         gerenciadorClien.exibirClientesComSequencia();
@@ -491,6 +520,8 @@ public class Lanchonete {
                                             }
                                         }
                                         break;
+
+                                    //OK
                                     case 4:
                                         boolean backVenda = false;
                                         while (!backVenda) {
@@ -501,30 +532,19 @@ public class Lanchonete {
                                             System.out.println("=======================================");
                                             System.out.print("##### Escolha uma opção: ");
                                             int choiceVend = sc.nextInt();
+                                            GerenciadorDeVendas gerenciadorVendas = new GerenciadorDeVendas();
                                             switch (choiceVend) {
                                                 case 1:
+                                                    try {
+                                                        //REL PRODUTO
+                                                        vendaNegocio.relVenda();
+                                                        gerenciadorVendas.sequenciaTodos();
+                                                    }catch (SQLException e){
+                                                        System.out.println("Erro " + e.getMessage());
+                                                    }
                                                     break;
                                                 case 0:
                                                     backVenda = true;
-                                                    break;
-                                            }
-                                        }
-                                        break;
-                                    case 5:
-                                        boolean backRela = false;
-                                        while (!backRela) {
-                                            System.out.println("#########    Relatório    ########");
-                                            System.out.println("==================================");
-                                            System.out.println("##### 1 - Ver Relatório      #####");
-                                            System.out.println("##### 0 - Sair               #####");
-                                            System.out.println("==================================");
-                                            System.out.print("##### Escolha uma opção: ");
-                                            int choiceRela = sc.nextInt();
-                                            switch (choiceRela) {
-                                                case 1:
-                                                    break;
-                                                case 0:
-                                                    backRela = true;
                                                     break;
                                             }
                                         }
@@ -591,10 +611,10 @@ public class Lanchonete {
             switch (choice) {
                 case 1:
                     System.out.print("Digite o Código do pedido que deseja: ");
-                    int codigo = sc.nextInt();
+                    codigo = sc.nextInt();
                     if (gerenciadorLanches.viewProducts(codigo)) {
                         System.out.print("\nDigite a quantidade: ");
-                        int quantidade = sc.nextInt();
+                        quantidade = sc.nextInt();
                         int id = produtoNegocio.searchId(codigo);
                         vendaNegocio.insertSale(id, codigo, quantidade);
                     }

@@ -7,6 +7,7 @@ import dominio.Venda;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class VendaNegocio {
     private VendaDAO vendaDAO;
@@ -24,6 +25,10 @@ public class VendaNegocio {
             vendaDAO.insertSale(venda);
             System.out.println("\nComprado com Sucesso!");
         }
+    }
+
+    public List<Venda> relVenda() throws SQLException {
+        return vendaDAO.relVenda();
     }
 
 }

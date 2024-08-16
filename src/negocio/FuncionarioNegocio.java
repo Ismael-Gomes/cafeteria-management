@@ -24,4 +24,12 @@ public class FuncionarioNegocio {
     public void updateFuncionario(Funcionario funcionario) throws SQLException{
         funcionarioDao.updateFuncionario(funcionario);
     }
+
+    public void dropFuncionario(String cpf) throws SQLException{
+        funcionarioDao.dropFuncionario(cpf);
+    }
+
+    public void vendaFuncionario(String cpf) throws SQLException{
+        funcionarioDao.vendaFuncionario(cpf);
+    }
 }
