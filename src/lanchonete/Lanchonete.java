@@ -497,7 +497,6 @@ public class Lanchonete {
                                             System.out.println("#######    Gerenciar Clientes    ######");
                                             System.out.println("=======================================");
                                             System.out.println("##### 1 - Ver Clientes            #####");
-                                            System.out.println("##### 2 - Relatórios              #####");
                                             System.out.println("##### 0 - Sair                    #####");
                                             System.out.println("=======================================");
                                             System.out.print("##### Escolha uma opção: ");
@@ -511,8 +510,6 @@ public class Lanchonete {
                                                     } catch (Exception e) {
                                                         System.out.println("Erro " + e.getMessage());
                                                     }
-                                                    break;
-                                                case 2:
                                                     break;
                                                 case 0:
                                                     backClien = true;
