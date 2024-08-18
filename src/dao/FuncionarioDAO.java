@@ -44,7 +44,7 @@ public class FuncionarioDAO {
 
     }
 
-    public List<Funcionario> searchByCPF(String cpf) throws SQLException {
+    public List<Funcionario> searchById(String cpf) throws SQLException {
         List<Funcionario> funcionarios = new ArrayList<>();
         String sql = "SELECT * FROM funcionario WHERE cpf = ?";
         try (Connection conexao = conection();

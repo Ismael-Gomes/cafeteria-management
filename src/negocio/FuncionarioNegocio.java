@@ -13,8 +13,8 @@ public class FuncionarioNegocio {
         return funcionarioDao.searchAll();
     }
 
-    public List<Funcionario> searchByCategory(String cpf) throws SQLException{
-        return funcionarioDao.searchByCPF(cpf);
+    public List<Funcionario> searchById(String cpf) throws SQLException{
+        return funcionarioDao.searchById(cpf);
     }
 
     public void insertFuncionario(Funcionario funcionario) throws SQLException{
