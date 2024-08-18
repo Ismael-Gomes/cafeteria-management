@@ -399,7 +399,7 @@ public class Lanchonete {
                                     case 2:
                                         boolean backFunc = false;
                                         while (!backFunc) {
-                                            System.out.println("#######   Gerenciar Funcionário   ######");
+                                            System.out.println("\n#######   Gerenciar Funcionário   ######");
                                             System.out.println("========================================");
                                             System.out.println("##### 1 - Cadastrar Funcionário    #####");
                                             System.out.println("##### 2 - Ver Funcionários         #####");
@@ -436,12 +436,32 @@ public class Lanchonete {
                                                     }
                                                     break;
                                                 case 2:
-                                                    try {
-                                                        GerenciadorDeFuncionarios gerenciadorFunc = new GerenciadorDeFuncionarios();
-                                                        funcionarioNegocio.searchAll();
-                                                        gerenciadorFunc.exibirFuncionariosComSequencia();
-                                                    } catch (Exception e) {
-                                                        System.out.println("Erro " + e.getMessage());
+                                                    System.out.print("Deseja procurar por algum funcionario especifico?\n1 - Sim\n2 - Não\nDigite: ");
+                                                    int resp = sc.nextInt();
+                                                    if(resp == 1){
+                                                        System.out.print("Digite o cpf do funcionario desejado: ");
+                                                        cpf = sc.next();
+                                                        if (isValidCPF(cpf)){
+                                                            try{
+                                                                GerenciadorDeFuncionarios gerenciadorDeFuncionarios = new GerenciadorDeFuncionarios();
+                                                                funcionarioNegocio.searchById(cpf);
+                                                                gerenciadorDeFuncionarios.exibirFuncionariosComSequencia();
+                                                            } catch (Exception e){
+                                                                System.out.println("Erro " + e.getMessage());
+                                                            }
+                                                        }else{
+                                                            System.out.println("CPF Invalido!");
+                                                        }
+                                                    }else if (resp == 2){
+                                                        try {
+                                                            GerenciadorDeFuncionarios gerenciadorFunc = new GerenciadorDeFuncionarios();
+                                                            funcionarioNegocio.searchAll();
+                                                            gerenciadorFunc.exibirFuncionariosComSequencia();
+                                                        } catch (Exception e) {
+                                                            System.out.println("Erro " + e.getMessage());
+                                                        }
+                                                    }else{
+                                                        System.out.println("Opção Invalida!");
                                                     }
                                                     break;
                                                 case 3:
