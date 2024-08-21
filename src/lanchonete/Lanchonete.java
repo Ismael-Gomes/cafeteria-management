@@ -21,7 +21,7 @@ public class Lanchonete {
     static AdminNegocio adminNegocio = new AdminNegocio();
     static PessoaNegocio pessoaNegocio = new PessoaNegocio();
 
-    private static String categoria, nome, descricao, cpf, numero_tele, email, senha, matricula;
+    private static String categoria, nome, descricao, cpf, cpfVendedor, numero_tele, email, senha, matricula;
     private static double preco, salario;
     private static int quantidade, codigo;
     private static boolean encontrado = true;
@@ -46,8 +46,14 @@ public class Lanchonete {
 
             switch (choice) {
                 case 1:
-                    clearScreen();
-                    menuOpcao1(sc);
+                    System.out.print("Digite o CPF do vendedor: ");
+                    cpfVendedor = sc.next();
+                    if (isValidCPF(cpfVendedor)) {
+                        clearScreen();
+                        menuOpcao1(sc);
+                    }else{
+                        System.out.println("CPF Invalido!");
+                    }
                     break;
                 case 2:
                     clearScreen();
@@ -81,9 +87,6 @@ public class Lanchonete {
         boolean back = false;
 
         while (!back) {
-            System.out.print("Digite o CPF do vendedor: ");
-            String cpfVendedor = sc.next();
-            if (isValidCPF(cpfVendedor)) {
                 System.out.println("\n######    Cardápio    #######");
                 System.out.println("===============================");
                 System.out.println("##### 1 - Lanche          #####");
@@ -154,9 +157,6 @@ public class Lanchonete {
                     default:
                         System.out.println("Opção inválida. Tente novamente.");
                 }
-            }else{
-                System.out.print("\nCPF Invalido!\n");
-            }
         }
     }
 
