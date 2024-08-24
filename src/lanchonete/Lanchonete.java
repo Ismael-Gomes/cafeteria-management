@@ -1,14 +1,17 @@
 package lanchonete;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Scanner;
 
+import dominio.Cliente;
 import dominio.Funcionario;
 import dominio.Produto;
 import negocio.AdminNegocio;
 import negocio.ProdutoNegocio;
 import negocio.VendaNegocio;
-import negocio.PessoaNegocio;
+import negocio.ClienteNegocio;
 import negocio.SuporteNegocio;
 import negocio.FuncionarioNegocio;
 
@@ -19,9 +22,9 @@ public class Lanchonete {
     static FuncionarioNegocio funcionarioNegocio = new FuncionarioNegocio();
     static SuporteNegocio suporteNegocio = new SuporteNegocio();
     static AdminNegocio adminNegocio = new AdminNegocio();
-    static PessoaNegocio pessoaNegocio = new PessoaNegocio();
+    static ClienteNegocio clienteNegocio = new ClienteNegocio();
 
-    private static String categoria, nome, descricao, cpf, cpfVendedor, numero_tele, email, senha, matricula;
+    private static String categoria, nome, descricao, cpf, cpfVendedor, numero_tele, email, senha, matricula, data_nascimento;
     private static double preco, salario;
     private static int quantidade, codigo;
     private static boolean encontrado = true;
@@ -165,24 +168,106 @@ public class Lanchonete {
         boolean back = false;
 
         while (!back) {
-            System.out.println("\nMenu da Opção 2:");
-            System.out.println("1. Sub-opção 2.1");
-            System.out.println("2. Sub-opção 2.2");
-            System.out.println("3. Voltar ao menu principal");
-            System.out.print("Escolha uma opção: ");
+            System.out.println("\n#####    Gerenciar Cliente    #####");
+            System.out.println("=====================================");
+            System.out.println("##### 1 - Login                 #####");
+            System.out.println("##### 2 - Criar uma Conta Nova  #####");
+            System.out.println("##### 0 - Sair                  #####");
+            System.out.println("=====================================");
+            System.out.print("##### Escolha uma opção: ");
             int choice = sc.nextInt();
-            clearScreen();
-
             switch (choice) {
                 case 1:
-                    System.out.println("Você escolheu a Sub-opção 2.1.");
-                    // Adicionar funcionalidade para Sub-opção 2.1 aqui
-                    break;
+                    boolean backClien = false;
+                    while (!backClien) {
+                        System.out.println("\n#####       Cliente       #####");
+                        System.out.println("=================================");
+                        System.out.println("##### 1 - Alterar Dados     #####");
+                        System.out.println("##### 2 - Apagar Conta      #####");
+                        System.out.println("##### 0 - Sair              #####");
+                        System.out.println("=================================");
+                        System.out.print("##### Escolha uma opção: ");
+                        int choiceClien = sc.nextInt();
+                        switch (choiceClien) {
+                            case 1:
+                                System.out.print("Digite o seu CPF: ");
+                                if (isValidCPF(cpf)) {
+                                    System.out.print("Digite o Novo Nome");
+                                    nome = sc.next();
+                                    System.out.print("Digite o Novo Nome da Conta: ");
+                                    String nomeConta = sc.next();
+                                    System.out.print("Digite a Nova Senha: ");
+                                    String senha = sc.next();
+                                    try {
+                                        Cliente cliente = new Cliente(nome, nomeConta, senha, cpf);
+                                        clienteNegocio.updateClien(cliente);
+                                    }catch (Exception e) {
+                                        System.out.println("Erro " + e.getMessage());
+                                    }
+                                }else{
+                                    System.out.println("CPF Invalida!");
+                                }
+                                break;
+                            case 2:
+                                System.out.print("Digite o seu CPF: ");
+                                if (isValidCPF(cpf)) {
+                                    try {
+                                        clienteNegocio.deleteClien(cpf);
+                                    }catch (Exception e) {
+                                        System.out.println("Erro " + e.getMessage());
+                                    }
+                                }else{
+                                    System.out.println("CPF Invalida!");
+                                }
+                                break;
+                            case 0:
+                                backClien = true;
+                                break;
+                        }
+                    }
                 case 2:
-                    System.out.println("Você escolheu a Sub-opção 2.2.");
-                    // Adicionar funcionalidade para Sub-opção 2.2 aqui
+                    System.out.print("Digite o seu Nome");
+                    nome = sc.next();
+                    System.out.print("Digite o seu CPF: ");
+                    cpf = sc.next();
+                    if(isValidCPF(cpf)) {
+                        System.out.print("Digite sua Data de Nascimento (XX/XX/XXXX): ");
+                        data_nascimento = sc.next();
+                        String[] dtNascimento = data_nascimento.split("/");
+                        if (dtNascimento.length == 3) {
+                            String dia = dtNascimento[0];
+                            String mes = dtNascimento[1];
+                            String ano = dtNascimento[2];
+                            if (isValidData(ano, mes, dia)) {
+                                data_nascimento = ano + mes + dia;
+                                System.out.print("Digite o seu Sexo (M/F): ");
+                                String sexo = sc.next();
+                                if (sexo.equals("M") || sexo.equals("m") || sexo.equals("F") || sexo.equals("f")) {
+                                    System.out.print("Digite o Nome da sua Conta: ");
+                                    String nomeConta = sc.next();
+                                    System.out.print("Digite seu E-mail: ");
+                                    email = sc.next();
+                                    System.out.print("Digite sua Senha; ");
+                                    senha = sc.next();
+                                    try {
+                                        clienteNegocio.insertClien(new Cliente(cpf, nome, nomeConta, sexo, data_nascimento, email, senha));
+                                    } catch (SQLException e) {
+                                        System.out.println("Erro " + e.getMessage());
+                                    }
+                                }else{
+                                    System.out.println("Sexo Invalido!");
+                                }
+                            } else {
+                                System.out.print("Data de nascimento invalida!");
+                            }
+                        }else{
+                            System.out.print("Data invalida!");
+                        }
+                    }else{
+                        System.out.println("CPF Invalido!");
+                    }
                     break;
-                case 3:
+                case 0:
                     back = true;
                     break;
                 default:
@@ -229,6 +314,7 @@ public class Lanchonete {
         }
     }
 
+    //OK
     private static void menuOpcao4(Scanner sc) throws InterruptedException {
         boolean back = false;
         while (!back) {
@@ -510,7 +596,7 @@ public class Lanchonete {
                                         }
                                         break;
 
-                                    //A fazer
+                                    //OK
                                     case 3:
                                         boolean backClien = false;
                                         while (!backClien) {
@@ -525,7 +611,7 @@ public class Lanchonete {
                                                 case 1:
                                                     try {
                                                         GerenciadorDeClientes gerenciadorClien = new GerenciadorDeClientes();
-                                                        pessoaNegocio.searchAll();
+                                                        clienteNegocio.searchAll();
                                                         gerenciadorClien.exibirClientesComSequencia();
                                                     } catch (Exception e) {
                                                         System.out.println("Erro " + e.getMessage());
@@ -553,7 +639,6 @@ public class Lanchonete {
                                             switch (choiceVend) {
                                                 case 1:
                                                     try {
-                                                        //REL PRODUTO
                                                         vendaNegocio.relVenda();
                                                         gerenciadorVendas.sequenciaTodos();
                                                     }catch (SQLException e){
@@ -600,14 +685,17 @@ public class Lanchonete {
         }
     }
 
+    //OK
     public static boolean isValidMatricula(String matricula) {
         return matricula.matches("\\d{12}"); // Verifica se a matrícula tem exatamente 12 dígitos
     }
 
+    //OK
     public static boolean isValidSenha(String senha) {
         return senha.length() >= 8 && senha.length() <= 20; // Verifica se a senha tem entre 8 e 20 caracteres
     }
 
+    //OK
     public static void clearScreen() throws InterruptedException {
         // Limpa o terminal imprimindo 100 linhas em branco
         for (int i = 0; i < 100; i++) {
@@ -620,6 +708,7 @@ public class Lanchonete {
         }
     }
 
+    //OK
     public static void comprarProduto(Scanner sc) {
         try {
             GerenciadorDeProdutos gerenciadorLanches = new GerenciadorDeProdutos();
@@ -644,6 +733,30 @@ public class Lanchonete {
         }
     }
 
+    //OK
+    public static boolean isValidData(String ano, String mes, String dia) {
+        Timestamp dataAtual = new Timestamp(System.currentTimeMillis());
+        int anoAtual = dataAtual.getDate();
+        int mesAtual = dataAtual.getMonth();
+        int diaAtual = dataAtual.getDay();
+        try {
+            int anoInt = Integer.parseInt(ano);
+            int mesInt = Integer.parseInt(mes);
+            int diaInt = Integer.parseInt(dia);
+            if(anoInt <= anoAtual){
+                if(mesInt <= mesAtual){
+                    if(diaInt <= diaAtual){
+                        return true;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return false;
+    }
+
+    //OK
     public static boolean isValidCPF(String cpf) {
         Scanner sc = new Scanner(System.in);
         do {
