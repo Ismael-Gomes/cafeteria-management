@@ -4,10 +4,9 @@ import java.sql.Date;
 
 public class Cliente {
 
-    private String nome, nomeConta, email, senha, cpf, sexo;
-    private Date data_nascimento;
+    private String nome, nomeConta, email, senha, cpf, sexo, data_nascimento;
 
-    public Cliente(String cpf, String nome, String nomeConta, String sexo, Date data_nascimento, String email, String senha) {
+    public Cliente(String cpf, String nome, String nomeConta, String sexo, String data_nascimento, String email, String senha) {
         this.nome = nome;
         this.nomeConta = nomeConta;
         this.email = email;
@@ -15,6 +14,13 @@ public class Cliente {
         this.sexo = sexo;
         this.senha = senha;
         this.data_nascimento = data_nascimento;
+    }
+
+    public Cliente(String nome, String nomeConta, String senha, String cpf) {
+        this.nome = nome;
+        this.nomeConta = nomeConta;
+        this.senha = senha;
+        this.cpf = cpf;
     }
 
     public String getNome() {
@@ -47,7 +53,7 @@ public class Cliente {
         return sexo;
     }
 
-    public Date getData_nascimento() {
+    public String getData_nascimento() {
 
         return data_nascimento;
     }
