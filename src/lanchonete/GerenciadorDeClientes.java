@@ -1,18 +1,18 @@
 package lanchonete;
 
 import dominio.Cliente;
-import negocio.PessoaNegocio;
+import negocio.ClienteNegocio;
 import java.sql.SQLException;
 import java.util.List;
 
 public class GerenciadorDeClientes {
 
     public void exibirClientesComSequencia() {
-        PessoaNegocio pessoaNegocio = new PessoaNegocio();
+        ClienteNegocio clienteNegocio = new ClienteNegocio();
         List<Cliente> clientes;
         
         try {
-            clientes = pessoaNegocio.searchAll();
+            clientes = clienteNegocio.searchAll();
         } catch (SQLException e) {
             System.out.println("Erro ao buscar clientes: " + e.getMessage());
             return;
